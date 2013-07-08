@@ -1,0 +1,15 @@
+{
+  "name": "autocmdr",
+  "version": "0.0.0",
+  "description": "autocmdr",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "J. Harshbarger",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "~1.2.0",
+    "eco": "~1.1.0-rc-3"
+  }
+}
