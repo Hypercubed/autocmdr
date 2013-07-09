@@ -3,7 +3,8 @@ var path = 	require('path');
 module.exports = function (program) {
 
 	program
-		.command('init [cmdfile]')
+		.command('add <cmdfile>')
+		.usage('<cmdfile>')
 		.description('Create a blank cmdfile.')
 		.action(function(cmdfile){
 			logger.log('info', 'Initilizing '+cmdfile);
@@ -11,7 +12,7 @@ module.exports = function (program) {
 			cmdfile = cmdfile || 'cmdfile.js';
 			var name = cmdfile.replace('.js', '');
 
-			var src = path.join(__dirname, '../base_cmdfile.js');
+			var src = path.join(__dirname, '../templates/cmdfile.js');
 			var dst = path.join(process.cwd(), 'cmds/', cmdfile);
 			var ctx = { name: name, version: '0.0.0', action: '// Your code goes here' };
 

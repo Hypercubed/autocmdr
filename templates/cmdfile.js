@@ -4,7 +4,7 @@ module.exports = function (program) {
 		.command('<%= @name %>')
 		.version('<%= @version %>')
 		.description('<%= @description %>')
-		.action(function(cmdfile){
+		.action(function(<%= @args %>){
 			<%= @action %>
 		});
 	

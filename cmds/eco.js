@@ -1,16 +1,18 @@
 var fs = 	require('fs');
 var eco = 	require('eco');
+var path = 	require('path');
 
 module.exports = function (program) {
 
 	program
-		.command('eco <src>')
+		.command('eco <source>')
 		.version('0.0.0')
 		.description('Render a file using eco')
 		.option('-o, --output [filename]', 'testing flagging in command')
 		.option('-c, --context [context]', 'context to pass to eco')
 		.action(function(src, options){
 			//  TODO: Get context from file
+			//  TODO: Get input from string
 
 			var dst = options.output || src;
 			var ctx = options.context || {};
@@ -32,6 +34,14 @@ function cpFileWithRender(src, dst, renderer, context) {
 	if (renderer) {
 		var reader = renderer(reader, context);
 	}
+
+	var dstdir = path.dirname(dst);
+
+	if (!fs.existsSync(dstdir)) {
+		fs.mkdirSync(dstdir)
+	}
+
+	//fs.mkdirSync(path, [mode])
 
 	fs.writeFile(dst, reader, function(err) {
 	    if(err) {

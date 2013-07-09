@@ -16,6 +16,7 @@
     "eco": "~1.1.0-rc-3",
     "caterpillar": "~2.0.3",
     "caterpillar-filter": "~2.0.1",
-    "caterpillar-human": "~2.1.0"
+    "caterpillar-human": "~2.1.0",
+    "editor": "0.0.4"
   }
 }
