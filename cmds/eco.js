@@ -1,23 +1,23 @@
 var fs = 	require('fs');
-var eco = require('eco');
+var eco = 	require('eco');
 
 module.exports = function (program) {
 
 	program
-		.command('eco <src> <dst> <context>')
+		.command('eco <src>')
 		.version('0.0.0')
 		.description('Render a file using eco')
-		.action(function(src, dst, context){
-			if (typeof dst == "object") {
-				context = dst;
-				dst = src;
-			} else {
-				context = context || {};
-			}
+		.option('-o, --output [filename]', 'testing flagging in command')
+		.option('-c, --context [context]', 'context to pass to eco')
+		.action(function(src, options){
+			//  TODO: Get context from file
 
-			console.log('Eco\'ing file ' + src + ' to ' + dst);
+			var dst = options.output || src;
+			var ctx = options.context || {};
 
-			cpFileWithRender(src, dst, eco.render, context);
+			logger.log('info', 'Eco\'ing file ' + src + ' to ' + dst);
+
+			cpFileWithRender(src, dst, eco.render, ctx);
 
 		});
 	
@@ -35,9 +35,9 @@ function cpFileWithRender(src, dst, renderer, context) {
 
 	fs.writeFile(dst, reader, function(err) {
 	    if(err) {
-	        console.log(err);
+	        logger.log('error', err);
 	    } else {
-	        console.log("The file was saved!");
+	        logger.log('info', "The file was saved!");
 	    }
 	});
 }

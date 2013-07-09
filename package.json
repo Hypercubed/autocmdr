@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "autocmdr",
   "main": "index.js",
+  "bin": {
+    "autocmdr": "./bin/autocmdr.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +13,9 @@
   "license": "MIT",
   "dependencies": {
     "commander": "~1.2.0",
-    "eco": "~1.1.0-rc-3"
+    "eco": "~1.1.0-rc-3",
+    "caterpillar": "~2.0.3",
+    "caterpillar-filter": "~2.0.1",
+    "caterpillar-human": "~2.1.0"
   }
 }

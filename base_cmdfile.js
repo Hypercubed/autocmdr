@@ -2,10 +2,10 @@ module.exports = function (program) {
 
 	program
 		.command('<%= @name %>')
-		.version('0.0.0')
-		.description('')
+		.version('<%= @version %>')
+		.description('<%= @description %>')
 		.action(function(cmdfile){
-			// Your code goes here
+			<%= @action %>
 		});
 	
 };
