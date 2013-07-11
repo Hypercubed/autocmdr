@@ -1,6 +1,3 @@
-Commander.js:
-
-- [ ] Disable help for some commands (use name, i.e. "~name" is a hidden command)
 - [ ] Command/event emitter for no args
 - [ ] String commands (cmder list -- show)
 
