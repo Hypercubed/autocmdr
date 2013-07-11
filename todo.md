@@ -22,3 +22,4 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [ ] Git style options
 - [ ] create lib/name.js?
 - [ ] require('name') to include all tasks in another autocmdr app?
+- [ ] Subcommands, i.e. autocmdr todo <cmd>
