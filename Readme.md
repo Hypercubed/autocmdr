@@ -60,6 +60,10 @@ If your tasks are useful in other projects you can convert a set of tasks to an 
 
 Use git or npm to share.
 
+# Todo
+
+See todo.md (managed using [todo-md](https://github.com/Hypercubed/todo-md))
+
 # License
 
   MIT
