@@ -5,7 +5,7 @@ This is a work in progress, experiment, proof of concept, and/or waist of time.
 
 # Description
 
-Task runner and [commander.js](https://github.com/visionmedia/commander.js) app builder.
+Task runner and [commander.js](https://github.com/visionmedia/commander.js) app builder.　　autocmdr itself was partially built using [autocmdr](https://github.com/Hypercubed/autocmdr).  See another example here: [todo-md](https://github.com/Hypercubed/todo-md)
 
 # Usage
 
@@ -63,3 +63,9 @@ Use git or npm to share.
 # License
 
   MIT
+
+# Acknowledgments
+
+autocmdr itself was (partially) built using [autocmdr](https://github.com/Hypercubed/autocmdr).
+
+autocmdr is build on top of [commander.js](https://github.com/visionmedia/commander.js)  and inspired by other task managers ([grunt](https://github.com/gruntjs/grunt), [automaton](https://github.com/IndigoUnited/automaton)) and command line tools ([docpad](https://github.com/bevry/docpad)).
