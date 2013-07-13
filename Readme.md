@@ -5,7 +5,7 @@ This is a work in progress, experiment, proof of concept, and/or waist of time.
 
 # Description
 
-Task runner and [commander.js](https://github.com/visionmedia/commander.js) app builder.　　autocmdr itself was partially built using [autocmdr](https://github.com/Hypercubed/autocmdr).  See another example here: [todo-md](https://github.com/Hypercubed/todo-md)
+Task runner and [commander.js](https://github.com/visionmedia/commander.js) app builder. autocmdr itself was partially built using [autocmdr](https://github.com/Hypercubed/autocmdr).  Also see teh obligitory todo app here [todo-md](https://github.com/Hypercubed/todo-md) (Works with GFM task lists!!)
 
 # Usage
 
