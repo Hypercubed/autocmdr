@@ -7,12 +7,16 @@ module.exports = function (program) {
 		.usage('<cmdfile>')
 		.description('Create a blank cmdfile.')
 		.action(function(cmdfile){
-			logger.log('info', 'Initilizing '+cmdfile);
-
-			cmdfile = cmdfile || 'cmdfile.js';
+			cmdfile = cmdfile || 'cmdfile';
 			var name = cmdfile.replace('.js', '');
 
-			var src = path.join(__dirname, '../templates/cmdfile.js');
+			if (!cmdfile.match('.js'))
+				cmdfile += '.js';
+
+			program.logger.log('info', 'Initilizing '+name);
+			
+
+			var src = path.join(__dirname, '../templates/cmdfile.js.eco');
 			var dst = path.join(process.cwd(), 'cmds/', cmdfile);
 			var ctx = { name: name, version: '0.0.0', action: '// Your code goes here' };
 

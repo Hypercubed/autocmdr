@@ -11,7 +11,6 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 
 - [x] Add logger
 - [ ] Unit tests
-- [ ] Option to turn on/off line numbers
 - [ ] Support grunt/automaton tasks?
 - [ ] Properly handle async actions
 - [ ] Autoload some mode_modules/.bin? Support external commands?
@@ -23,3 +22,6 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [ ] create lib/name.js?
 - [ ] require('name') to include all tasks in another autocmdr app?
 - [ ] Subcommands, i.e. autocmdr todo <cmd>
+- [ ] Run add on edit.
+- [ ] Names don't have .js, files do.
+- [ ] (add|edit) name[.js], .js is optional

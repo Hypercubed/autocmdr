@@ -4,7 +4,7 @@
   "description": "autocmdr",
   "main": "index.js",
   "bin": {
-    "autocmdr": "./bin/autocmdr.js"
+    "autocmdr": "./bin/autocmdr"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

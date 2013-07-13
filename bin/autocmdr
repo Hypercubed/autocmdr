@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+
+// node
+var path			= require('path');
+
+var autocmdr  = require('../');
+var pkg = require('../package.json');
+
+autocmdr._name = 'autocmdr'
+
+autocmdr
+	//.name('test')
+	.usage('[options] <cmd>')
+	.version(pkg.version)
+	.description('Autocmdr');
+
+autocmdr
+	.option('-g, --global', "use global autocmdr tasks")
+	.once('global', function() {
+		autocmdr.loadCmds(path.join(__dirname,'../cmds/'));
+	});
+
+autocmdr
+	.on('*', function(name) { 
+		autocmdr.logger.log('warn', '\''+name+'\' is not a known command. See \''+autocmdr._name+' --help\'.');
+	});
+
+autocmdr
+	.on('--help', function(){
+	  console.log('  Bug reports, suggestions, updates:');
+	  console.log('  ', pkg.bugs.url);
+	});
+
+var argv = autocmdr.normalize(process.argv);
+
+if (argv.indexOf('-g') < 0) {
+	autocmdr.loadCmds(path.join(process.cwd(), 'cmds/'));
+}
+
+autocmdr.parse();
+
+if (autocmdr.args.length < 1 )
+	autocmdr.outputHelp();

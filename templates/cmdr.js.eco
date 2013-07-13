@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+
+// node
+var path			= require('path');
+
+var autocmdr  = require('autocmdr');
+
+autocmdr._name = "<%- @name %>";
+
+autocmdr
+	//.name('<%= @name %>')
+	.usage('<%- @usage %>')
+	.version('<%- @version %>')
+	.description('<%- @description %>')
+	.loadCmds(path.join(__dirname,'../cmds/'))
+	.parse();
+
+autocmdr
+	.on('*', function(name) { 
+		autocmdr.logger.log('warn', '\''+name+'\' is not a known command. See \''+autocmdr._name+' --help\'.');
+	});
+
+if (autocmdr.args.length < 1 )
+	autocmdr.emit('--help', ['']);

@@ -9,6 +9,9 @@ module.exports = function (program) {
 		.action(function(cmdfile){
 			// export VISUAL=`cygpath -w "/cygdrive/c/Program Files/Sublime Text 2/sublime_text.exe"`
 
+			if (!cmdfile.match('.js'))
+				cmdfile += '.js';
+
 			var file = path.join(process.cwd(), 'cmds/', cmdfile);  // Handle paths, edit command wherever it is.
 
 			//console.log(process.env);
