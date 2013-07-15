@@ -25,3 +25,6 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [ ] Run add on edit.
 - [ ] Names don't have .js, files do.
 - [ ] (add|edit) name[.js], .js is optional
+- [ ] Autocmdr apps should depending only on commader, by default
+- [x] Load 'plugins' to get logging and easy loading
+- [ ] Make logger and loader optional?

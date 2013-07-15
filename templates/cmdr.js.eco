@@ -3,22 +3,28 @@
 // node
 var path			= require('path');
 
-var autocmdr  = require('autocmdr');
+// need to `npm install commander`
+var program  = require('commander');
 
-autocmdr._name = "<%- @name %>";
+program._name = "<%- @name %>";
 
-autocmdr
+
+// These require autocmdr `npm install Hypercubed/autocmdr`
+require('autocmdr/lib/logger.js')(program);
+require('autocmdr/lib/loader.js')(program);
+
+program
 	//.name('<%= @name %>')
 	.usage('<%- @usage %>')
 	.version('<%- @version %>')
 	.description('<%- @description %>')
 	.loadCmds(path.join(__dirname,'../cmds/'))
-	.parse();
+	.parse(process.argv);
 
-autocmdr
+program
 	.on('*', function(name) { 
-		autocmdr.logger.log('warn', '\''+name+'\' is not a known command. See \''+autocmdr._name+' --help\'.');
+		program.logger.log('warn', '\''+name+'\' is not a known command. See \''+program._name+' --help\'.');
 	});
 
-if (autocmdr.args.length < 1 )
-	autocmdr.emit('--help', ['']);
+if (program.args.length < 1 )
+	program.parse(['', '', '--help']);
