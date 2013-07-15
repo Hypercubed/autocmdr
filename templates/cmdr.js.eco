@@ -3,13 +3,13 @@
 // node
 var path			= require('path');
 
-// need to `npm install commander`
-var program  = require('commander');
+// need to `npm link autocmdr`
+var program  = require('autocmdr');
 
 program._name = "<%- @name %>";
 
-
-// These require autocmdr `npm install Hypercubed/autocmdr`
+// These require autocmdr `npm link autocmdr`
+//require('autocmdr/lib/package.js')(program);
 require('autocmdr/lib/logger.js')(program);
 require('autocmdr/lib/loader.js')(program);
 
