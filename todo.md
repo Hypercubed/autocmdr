@@ -29,3 +29,5 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [x] Load 'plugins' to get logging and easy loading
 - [ ] Make logger and loader optional?
 - [ ] Build readme?
+- [ ] add lib/runner.js to execute program.
+- [ ] add lib/config.js to add config store.
