@@ -3,11 +3,11 @@
 // node
 var path			= require('path');
 
-var program  = require('commander');
+var program  = require('../');
 
-require('autocmdr/lib/package.js')(program);
-require('autocmdr/lib/logger.js')(program);
-require('autocmdr/lib/loader.js')(program);
+require('../lib/package.js')(program);
+require('../lib/logger.js')(program);
+require('../lib/loader.js')(program);
 
 program
 	.option('-g, --global', "use global autocmdr tasks")
