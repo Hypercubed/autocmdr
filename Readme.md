@@ -5,7 +5,7 @@ This is a work in progress, experiment, proof of concept, and/or waist of time.
 
 # Description
 
-Task runner and [commander.js](https://github.com/visionmedia/commander.js) app builder. autocmdr itself was partially built using [autocmdr](https://github.com/Hypercubed/autocmdr).  Also see teh obligitory todo app here [todo-md](https://github.com/Hypercubed/todo-md) (Works with GFM task lists!!)
+Task runner and [commander.js](https://github.com/visionmedia/commander.js) app builder. autocmdr itself was partially built using [autocmdr](https://github.com/Hypercubed/autocmdr).  Also see the obligitory todo app here [todo-md](https://github.com/Hypercubed/todo-md) (Works with GFM task lists!!)
 
 # Usage
 
@@ -17,44 +17,59 @@ Task runner and [commander.js](https://github.com/visionmedia/commander.js) app 
 
 ## Use autocmdr as a task runner
 
-You can add, edit, and run tasks using autocmdr. Autocmdr tasks are stored in a subdirectoy of your project.  All tasks located in the cmds/ of the current working directory are automatically loaded.  As a task runner the rest of your project remains untouched so you can add tasks to existing projects.
+You can add, edit, and run tasks using autocmdr. Autocmdr tasks are stored in a subdirectoy of your project.  All tasks located in the cmds/ folder of the current working directory are automatically loaded.  As a task runner the rest of your project remains untouched so you can add tasks to existing projects (no dependencies or package.json reqired).
 
-	cd yourproject
-	autocmdr -g add mytask.js
-	autocmdr -g edit mytask.js
-	autocmdr mytask
+```
+cd yourproject
+autocmdr -g add mytask.js
+autocmdr -g edit mytask.js
+autocmdr mytask
+```
 
+## As an app builder
 
-## As an app builder (Not yet)
+If your tasks are usefull in other projects you can convert a set of tasks to an semi-independant app. 
 
-If your tasks are useful in other projects you can convert a set of tasks to an semi-independant [commander.js](https://github.com/visionmedia/commander.js) app. 
+1. Add an independent task runner
 
-	cd yourproject
-	autocmdr -g init myapp
-	npm link .
+```
+cd yourproject
+autocmdr -g init myapp
+npm link autocmdr
+./bin/myapp --help
+```
+
+2. Make it global
+
+```
+npm link .
 	
-	cd somewhere
-	myapp mytask
+cd anywhere
+myapp mytask --help
+```
 
 ## Usage
 
-	Usage: autocmdr.js [options] <cmd>
+```
+Usage: autocmdr.js [options] <cmd>
 
-	Commands:
+Commands:
 
-    add <cmdfile>          		Create a blank cmdfile.
-    cat [options] <cmd>    		List command source
-    edit [options] <cmd>   		Edit command file.
-    init [options] <name> 		Create a new autocmdr application here.
-    rm [options] <cmdfile> 		Delete a command.
+	add <cmdfile>          		Create a blank cmdfile.
+	cat [options] <cmd>    		List command source
+	edit [options] <cmd>   		Edit command file.
+	init [options] <name> 		Create a new autocmdr application here.
+	rm [options] <cmdfile> 		Delete a command.
 
-	Options:
+Options:
 
-    -h, --help     output usage information
-    -d, --debug    enable debugger
-    -V, --version  output the version number
-    -d, --debug    enable debugger
-    -g, --global   use global autocmdr tasks
+	-h, --help     output usage information
+	-d, --debug    enable debugger
+	-V, --version  output the version number
+	-d, --debug    enable debugger
+	-g, --global   use global autocmdr tasks
+	
+```
 
 ## Share
 
