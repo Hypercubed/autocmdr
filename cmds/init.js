@@ -3,6 +3,7 @@ module.exports = function (program) {
 
 	program
 		.command('init <name>')
+		// TODO: option to change template
 		.version('0.0.0')
 		.description('Create a new autocmdr application here.')
 		.action(function(cmdrfile){

@@ -5,6 +5,7 @@ module.exports = function (program) {
 	program
 		.command('add <cmdfile>')
 		.usage('<cmdfile>')
+		// TODO: option to change template
 		.description('Create a blank cmdfile.')
 		.action(function(cmdfile){
 			cmdfile = cmdfile || 'cmdfile';

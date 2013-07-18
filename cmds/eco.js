@@ -2,6 +2,8 @@ var fs = 	require('fs');
 var eco = 	require('eco');
 var path = 	require('path');
 
+// TODO: Move this!
+
 module.exports = function (program) {
 
 	program
