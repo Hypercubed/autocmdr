@@ -5,9 +5,10 @@ var path			= require('path');
 
 var program  = require('../');
 
-require('../lib/package.js')(program);
 require('../lib/logger.js')(program);
+require('../lib/package.js')(program);
 require('../lib/loader.js')(program);
+require('../lib/config.js')(program);
 
 program
 	.option('-g, --global', "use global autocmdr tasks")
