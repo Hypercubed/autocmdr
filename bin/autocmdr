@@ -3,16 +3,20 @@
 // node
 var path			= require('path');
 
+// autocmdr
 var program  = require('../');
 
-require('../lib/package.js')(program);
+// Plugins
 require('../lib/logger.js')(program);
-require('../lib/loader.js')(program);
+require('../lib/package.js')(program);
+require('../lib/config.js')(program);
+require('../lib/eco.js')(program);
 
 program
 	.option('-g, --global', "use global autocmdr tasks")
 	.once('global', function() {
-		program.loadCmds(path.join(__dirname,'../cmds/'));
+		var dirpath = path.join(__dirname,'../cmds/');
+		require('../lib/loader.js')(program, { cmdspath: dirpath });
 	});
 
 program
@@ -23,7 +27,8 @@ program
 var argv = program.normalize(process.argv);
 
 if (argv.indexOf('-g') < 0) {
-	program.loadCmds(path.join(process.cwd(), 'cmds/'));
+	var dirpath = path.join(process.cwd(), 'cmds/');
+	require('../lib/loader.js')(program, { cmdspath: dirpath });
 }
 
 program.parse(argv);

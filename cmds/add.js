@@ -5,6 +5,7 @@ module.exports = function (program) {
 	program
 		.command('add <cmdfile>')
 		.usage('<cmdfile>')
+		// TODO: option to change template
 		.description('Create a blank cmdfile.')
 		.action(function(cmdfile){
 			cmdfile = cmdfile || 'cmdfile';
@@ -25,7 +26,8 @@ module.exports = function (program) {
 			//program.parseArgs(['cp', src, dst]);
 			// TODO: Check if copy executed
 
-			program.parse([process.argv[0], process.argv[1], 'eco', src, '-c', ctx, '-o', dst]);
+			//program.parse([process.argv[0], process.argv[1], 'eco', src, '-c', ctx, '-o', dst]);
+			program.eco(src, dst, ctx);
 			//program.parseArgs(['eco', src, ctx, '-o', dst]);
 
 		});

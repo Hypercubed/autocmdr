@@ -3,6 +3,7 @@ module.exports = function (program) {
 
 	program
 		.command('init <name>')
+		// TODO: option to change template
 		.version('0.0.0')
 		.description('Create a new autocmdr application here.')
 		.action(function(cmdrfile){
@@ -20,7 +21,8 @@ module.exports = function (program) {
 			//program.parseArgs(['cp', src, dst]);
 			// TODO: Check if copy executed
 
-			program.parse([process.argv[0], process.argv[1], 'eco', src, '-c', ctx, '-o', dst]);
+			//program.parse([process.argv[0], process.argv[1], 'eco', src, '-c', ctx, '-o', dst]);
+			program.eco(src, dst, ctx);
 			//program.parseArgs(['eco', src, ctx, '-o', dst]);
 
 
@@ -34,6 +36,7 @@ module.exports = function (program) {
 			//  npm install autocmdr??
 			//  npm install
 			//  npm link .
+			
 		});
 	
 };

@@ -31,3 +31,4 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [ ] Build readme?
 - [ ] add lib/runner.js to execute program.
 - [ ] add lib/config.js to add config store.
+- [ ] Add did you mean XXX plugin
