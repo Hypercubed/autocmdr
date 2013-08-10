@@ -12,12 +12,13 @@
   "author": "J. Harshbarger",
   "license": "MIT",
   "dependencies": {
-    "commander": "~1.2.0",
+    "commander": "~2.0.0",
     "eco": "~1.1.0-rc-3",
     "editor": "0.0.4",
     "winston": "~0.7.2",
     "nconf": "~0.6.7",
-    "didyoumean": "~1.1.0"
+    "didyoumean": "~1.1.0",
+    "commander-tabtab": "0.0.1"
   },
   "bugs": {
     "url": "https://github.com/Hypercubed/autocmdr/issues"

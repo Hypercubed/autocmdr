@@ -5,12 +5,14 @@ var path			= require('path');
 
 // autocmdr
 var program  = require('../');
-var argv = program.normalize(process.argv);
 
 // Plugins
 require('../lib/logger.js')(program);
 require('../lib/package.js')(program);
 require('../lib/help.js')(program);
+require('../lib/eco.js')(program);
+
+var argv = program.normalize(process.argv);
 
 if (argv.indexOf('-g') > -1) {  // Global autocmdr
 	require('../lib/loader.js')(program);
@@ -26,6 +28,8 @@ if (argv.indexOf('-g') > -1) {  // Global autocmdr
 
 program
 	.option('-g, --global', "use global autocmdr tasks");
+
+require('../lib/completion.js')(program);
 
 program.parse(argv);
 

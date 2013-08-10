@@ -13,7 +13,7 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [ ] Update to latest commander.js
 
 ### New features/plugins
-- [ ] tabtab autocompletion
+- [x] tabtab autocompletion
 - [x] Did you mean XXX plugin for unknown commands
 - [ ] co-prompt
 
@@ -47,3 +47,4 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [x] add lib/config.js to add config store.
 - [ ] add lib/runner.js to execute program.
 - [ ] Add did you mean XXX plugin
+- [ ] Take a look at eco plugin.
