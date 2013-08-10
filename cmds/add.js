@@ -1,6 +1,9 @@
-var path = 	require('path');
+
 
 module.exports = function (program) {
+	var editor = require('editor');
+	var path = 	require('path');
+	var fs = require('fs');
 
 	program
 		.command('add <cmdfile>')
@@ -14,21 +17,26 @@ module.exports = function (program) {
 			if (!cmdfile.match('.js'))
 				cmdfile += '.js';
 
-			program.logger.log('info', 'Initilizing '+name);
-			
-
 			var src = path.join(__dirname, '../templates/cmdfile.js.eco');
 			var dst = path.join(process.cwd(), 'cmds/', cmdfile);
-			var ctx = { name: name, version: '0.0.0', action: '// Your code goes here' };
 
-			// TODO: Check if file already exists
+			fs.exists(dst, function (exists) {
 
-			//program.parseArgs(['cp', src, dst]);
-			// TODO: Check if copy executed
+				if (exists) {
+					program.logger.warn('Command ',name.green,'already exists at',dst);
+				} else {
+					program.logger.info('Initilizing command',name.green,'at',dst);
 
-			//program.parse([process.argv[0], process.argv[1], 'eco', src, '-c', ctx, '-o', dst]);
-			program.eco(src, dst, ctx);
-			//program.parseArgs(['eco', src, ctx, '-o', dst]);
+					var ctx = { name: name, version: '0.0.0', action: '// Your code goes here' };
+
+					program.eco(src, dst, ctx);
+				}
+
+				editor(dst, function (code, sig) {
+				    //console.log('finished editing with code ' + code);
+				});	
+					
+			});
 
 		});
 

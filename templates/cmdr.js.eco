@@ -1,30 +1,20 @@
 #!/usr/bin/env node
 
-// node
-var path			= require('path');
-
 // need to `npm link autocmdr`
 var program  = require('autocmdr');
 
-program._name = "<%- @name %>";
-
-// These require autocmdr `npm link autocmdr`
-//require('autocmdr/lib/package.js')(program);
 require('autocmdr/lib/logger.js')(program);
 require('autocmdr/lib/loader.js')(program);
-
-program
-	//.name('<%= @name %>')
-	.usage('<%- @usage %>')
-	.version('<%- @version %>')
-	.description('<%- @description %>')
-	.loadCmds(path.join(__dirname,'../cmds/'))
-	.parse(process.argv);
+require('autocmdr/lib/package.js')(program);
+require('autocmdr/lib/config.js')(program);
 
 program
 	.on('*', function(name) { 
 		program.logger.log('warn', '\''+name+'\' is not a known command. See \''+program._name+' --help\'.');
 	});
 
+program
+	.parse(process.argv);
+
 if (program.args.length < 1 )
-	program.parse(['', '', '--help']);
+	program.outputHelp();

@@ -8,6 +8,9 @@ module.exports = function (program) {
 			var fs = require('fs');
 			var path = require('path');
 
+			if (!cmdfile.match('.js'))
+				cmdfile += '.js';
+
 			// Your code goes here
 			var file = path.join(process.cwd(), 'cmds/', cmdfile);  // Handle paths, edit command wherever it is.
 
