@@ -45,3 +45,5 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [ ] Plugins should require other plugins
 - [ ] Build readme?
 - [x] add lib/config.js to add config store.
+- [ ] add lib/runner.js to execute program.
+- [ ] Add did you mean XXX plugin
