@@ -14,7 +14,7 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 
 ### New features/plugins
 - [ ] tabtab autocompletion
-- [ ] Did you mean XXX plugin for unknown commands
+- [x] Did you mean XXX plugin for unknown commands
 - [ ] co-prompt
 
 ### Commander.js

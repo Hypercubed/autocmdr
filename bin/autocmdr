@@ -10,6 +10,7 @@ var argv = program.normalize(process.argv);
 // Plugins
 require('../lib/logger.js')(program);
 require('../lib/package.js')(program);
+require('../lib/help.js')(program);
 
 if (argv.indexOf('-g') > -1) {  // Global autocmdr
 	require('../lib/loader.js')(program);
@@ -25,11 +26,6 @@ if (argv.indexOf('-g') > -1) {  // Global autocmdr
 
 program
 	.option('-g, --global', "use global autocmdr tasks");
-
-program
-	.on('*', function(name) { 
-		program.logger.log('warn', '\''+name+'\' is not a known command. See \''+program._name+' --help\'.');
-	});
 
 program.parse(argv);
 

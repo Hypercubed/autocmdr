@@ -16,7 +16,8 @@
     "eco": "~1.1.0-rc-3",
     "editor": "0.0.4",
     "winston": "~0.7.2",
-    "nconf": "~0.6.7"
+    "nconf": "~0.6.7",
+    "didyoumean": "~1.1.0"
   },
   "bugs": {
     "url": "https://github.com/Hypercubed/autocmdr/issues"
