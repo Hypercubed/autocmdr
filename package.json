@@ -7,7 +7,7 @@
     "autocmdr": "./bin/autocmdr"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -R spec"
   },
   "author": "J. Harshbarger",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "winston": "~0.7.2",
     "nconf": "~0.6.7",
     "didyoumean": "~1.1.0",
-    "commander-tabtab": "0.0.1"
+    "tabtab": "0.0.2"
   },
   "bugs": {
     "url": "https://github.com/Hypercubed/autocmdr/issues"

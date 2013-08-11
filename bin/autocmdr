@@ -10,7 +10,6 @@ var program  = require('../');
 require('../lib/logger.js')(program);
 require('../lib/package.js')(program);
 require('../lib/help.js')(program);
-require('../lib/eco.js')(program);
 
 var argv = program.normalize(process.argv);
 
