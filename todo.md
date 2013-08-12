@@ -4,18 +4,25 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 
 ### Priority
 - [ ] Finish init function
-	- [ ] NPM init?
-	- [ ] npm link autocmdr vs. npm install --save autocmdr
+	- [ ] exec NPM init
+	- [ ] exec npm link autocmdr or npm install --save autocmdr
+	- [ ] Rename ./.autocmdr and ./autocmdr.js to .myapp and myapp.js	
 - [ ] Finish config
 	- [ ] First autocmdr .autocmdr then cwd .autocmdr
 	- [ ] Scaffold bin/app to use .[appname] as config
 - [x] Update readme with better intro
-- [ ] Update to latest commander.js
+- [x] Update to latest commander.js
+- [ ] Add command and plugin file examples to Readme.md
+- [ ] Add description of plugins to readme
+- [x] Autoload autocmdr.js in cwd.
+	- [ ] Document this
 
 ### New features/plugins
 - [x] tabtab autocompletion
 - [x] Did you mean XXX plugin for unknown commands
 - [ ] co-prompt
+- [ ] file globber
+- [ ] Localization!!
 
 ### Commander.js
 
@@ -24,7 +31,7 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 ### Auto commander:
 
 - [x] Add logger
-- [ ] Unit tests
+- [-] Unit tests
 - [ ] Support grunt/automaton tasks?
 - [ ] Properly handle async actions
 - [ ] Autoload some mode_modules/.bin? Support external commands?
@@ -37,14 +44,14 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [ ] Subcommands?, i.e. autocmdr todo <cmd>
 - [ ] Run add on edit.
 - [x] Run edit on add.
-- [ ] Names don't have .js, files do.
+- [x] Names don't have .js, files do.
 - [x] add|edit name[.js], .js is optional
-- [ ] Autocmdr apps should depending only on commander, by default
+- [ ] Should autocmdr apps should depend only on commander.js, by default
 - [x] Load 'plugins' to get logging and easy loading
 - [x] Make logger and loader optional?
 - [ ] Plugins should require other plugins
 - [ ] Build readme?
 - [x] add lib/config.js to add config store.
-- [ ] add lib/runner.js to execute program.
-- [ ] Add did you mean XXX plugin
-- [ ] Take a look at eco plugin.
+- [ ] add lib/runner.js to execute programs.
+- [x] Add did you mean XXX plugin
+- [-] Take a look at eco plugin.

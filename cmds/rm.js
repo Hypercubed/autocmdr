@@ -14,8 +14,13 @@ module.exports = function (program) {
 			// Your code goes here
 			var file = path.join(process.cwd(), 'cmds/', cmdfile);  // Handle paths, edit command wherever it is.
 
-			fs.unlinkSync(file)
-			logger.log('info', 'Successfully deleted '+cmdfile);
+			if (fs.existsSync(file)) {
+				fs.unlinkSync(file)
+				program.logger.info('Successfully deleted ',cmdfile.green);					
+			} else {
+				program.logger.warn('Command',cmdfile.green,'not found');
+			}
+			
 		});
 	
 };

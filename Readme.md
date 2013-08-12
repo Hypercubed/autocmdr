@@ -7,6 +7,11 @@ This is a work in progress, experiment, proof of concept, and/or waist of time.
 
 autocmdr is a command runner, command builder, and command line interface app builder.  autocmdr itself was partially built using autocmdr.  Also see the obligatory todo app here [todo-md](https://github.com/Hypercubed/todo-md) (Works with GFM task lists!!).
 
+Warning... The usage is changing rapidly.  I'm still discovering new ways to use this.  Feedback is welcome.
+
+[![Gittip donate button](http://badgr.co/gittip/hypercubed.png)](https://www.gittip.com/hypercubed/ "Donate weekly to this project using Gittip")
+[![Paypal donate button](http://badgr.co/paypal/donate.png?bg=%23feb13d)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X7KYR6T9U2NHC "One time donation to this project using Paypal")
+
 # Introduction
 
 The diverse ecosystem of modules available for node.js through npm make it a great tool the rapid development of a variety of tools including useful command line interfaces.  [Commander.js](https://github.com/visionmedia/commander.js) from [visionmedia](https://github.com/visionmedia) is an excellent node.js command line parser that, using a natural, clean and highly readable syntax, allows for easy development of versatile self-documenting command line interfaces (CLIs).  However, a command line parser is just the beginning.  Many CLIs will inevitably need to include additional modules for debug logging, configuration management, and other CLI type actions.  autocmdr is a command line tool that implements these modules, so you don't have too.  In fact in what I am calling local mode all you need to do is add command modules to your local directory and autocmdr will load them automatically along with a reasonable set of additional support modules.  Furthermore, in global mode autocmdr provides tools for easily building and managing these commands.  This includes converting a detached set of command modules into a semi-independent CLI application that uses autocmdr (along with all it's support modules) as a library.

@@ -1,12 +1,13 @@
+// This the autocmdr file.  It is automatically loaded when autocmdr is called in this directory
+
 var fs = 	require('fs');
 var eco = 	require('eco');
 var path = 	require('path');
 
 module.exports = function (program) {
 
-	program.eco = cpFileWithRender;
+	program.eco = cpFileWithRender;  // This is not a plugin... maybe it should be
 
-	// Move this to seperate cmdfile
 	function cpFileWithRender(src, dst, context) {
 		program.logger.debug('info', 'Eco\'ing file ' + src + ' to ' + dst);
 
