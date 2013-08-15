@@ -20,10 +20,6 @@ The diverse ecosystem of modules available for node.js through npm make it a gre
 
 autocmdr is a CLI application builder.  autocmdr itself is CLI that includes a reasonable set of support modules that enhance its interface.  It stands to reason that CLIs built using autocmdr would benefit from using these same modules.
 
-## Commands and Plugins
-
-Commands and plugins are simply node.js modules that export a single initialization function.  This function is called passing to it a commander.js program and an optional options object.  Commands and plugins have a simple syntax that doesn't deviate far from the syntax established by commander.js itself. See autocmdr's [commands](https://github.com/Hypercubed/autocmdr/tree/master/cmds) and [plugins](https://github.com/Hypercubed/autocmdr/tree/master/lib) for examples.
-
 # Usage
 
 ## Summary
@@ -56,14 +52,14 @@ Commands available in global mode:
     add <cmdfile>              Create a blank cmdfile.
     edit [options] <cmd>       Edit command file.
     init [options] <name>      Create a new autocmdr application here.
-	rm [options] <cmdfile>     Delete a command.
+    rm [options] <cmdfile>     Delete a command.
     
     Options:
 
     -h, --help     output usage information
-	-d, --debug    enable debugger
-	-V, --version  output the version number
-	-g, --global   use global autocmdr tasks
+    -d, --debug    enable debugger
+    -V, --version  output the version number
+    -g, --global   use global autocmdr tasks
 
 ## Using autocmdr as a app builder (Library mode)
 
@@ -84,8 +80,85 @@ If a set of commands in a folder are useful globally you can convert a set of ta
         myapp --help
 
 The new executable you just created, by default, will have access to the autocmdr plugins as well as the commands in the `cmds/` folder.
+
+## Commands and Plugins
+
+Commands and plugins are node.js modules that export a single initialization function.  This function is called with a commander.js program and an optional options object.  Commands and plugins have a simple syntax that doesn't deviate far from the syntax established by commander.js itself. See autocmdr's [commands](https://github.com/Hypercubed/autocmdr/tree/master/cmds) and [plugins](https://github.com/Hypercubed/autocmdr/tree/master/lib) for examples.
+
+## Command modules
+
+The most basic form of a command module is shown below.  Within the function the commander.js program can me modified as any other commander.js program (see [commander.js api documentation](http://visionmedia.github.io/commander.js/)).  
+
+    module.exports = function (program, options) {
+
+        program
+            .command('name')
+            .version('version')
+            .description('description')
+            .action(function(){
+                // Do something
+            });
     
-## Share
+    };
+
+## Plugin modules
+
+autocmdr plugin modules have the same structure as command modules.  The only differnece is that they are not designed to be automatically loaded.  Plugins are loaded using node's require function again exporting a single initialization function; this time accepting an options object as teh second paramater.  Below are the builtin autocmdr plugins.
+
+### loader
+
+This plugin is what loads the `cmds/` modules. 
+
+Adding `require('autocmdr/lib/loader.js')(program)` will load all modules in the `cmds` folder just above the executable.  This path can be overidden by setting the path option; for example `require('autocmdr/lib/loader.js')(program, { path: path.join(process.cwd(), 'cmds/') )` will load modules from the cwd's `/cmds` folder.
+
+### logger
+
+The logger plugin uses [Winston](https://github.com/flatiron/winston) for logging.
+
+Adding `require('autocmdr/lib/logger.js')(program)` will add `program.logger` to your application.  The plugin will enable  output to the terminal depending on the log level.  The plugin will also add the `-d` option to your application to enable debug logging.  Then logging can be done like this:
+
+    program.log('info', 'Hello!');
+    program.info('Hello again');
+    program.debug('Can you hear me now?');
+
+### config
+
+This plugin will load [nconf](https://github.com/flatiron/nconf) for handeling of configuration.  WIP
+
+Adding `require('autocmdr/lib/config.js')(program)` will enable this.
+
+### help
+
+This plugin will use [didyoumean](https://github.com/dcporter/didyoumean.js) to add a "Did you mean:" message to your application when an unknown command is given.
+
+Adding `require('autocmdr/lib/help.js')(program)` will enable this.
+
+### package
+
+This plugin will use the will load resonable defaults (such as descrtion and bug reporting url) from your application's package.json.
+
+Adding `require('autocmdr/lib/package.js')(program)` will load the package.json file located one directory above the executable.  You can override this path using the options object.
+
+### completion
+
+This pluging will use [node-tabtab](https://github.com/mklabs/node-tabtab) to add auto-completion support to your application.
+
+Adding `require('autocmdr/lib/completion.js')(program)` just before `program.parse(argv);` will will enable auto-completion support.  You will then need to do one of the following to enable auto-completion in your shell.
+
+* Add completion helper to ~/.bashrc (or ~/.zshrc) `pkgname completion >> ~/.bashrc`
+* Add completion to current shell `. <(pkgname completion)`
+
+# Questions
+
+Q: Doesn't flatiron do the same thing?  You're even using some flatiron modules!  Why not just use [flatiron](https://github.com/flatiron/flatiron) to build your cli applications.
+A: Good question with perhaps a few bad answers.
+
+1. Flatiron uses [broadway](https://github.com/flatiron/broadway) for plugins.  This feels very much like a web framework thing.  Honestly, when I first encountered flatiron (before starting to work on autocmdr) I didn't even realize that it had cli support, and after looking at it more later I realized it's cli support was good but still felt like an afterthought.
+2. Flatiron uses [optimist](https://github.com/substack/node-optimist) for command line parsing.  I felt commander.js was a cleaner api so I build autocmdr using that.
+3. I really like the idea that I can prototype a command line app using autocmdr in local mode before creating a full app.  Flatiron itself cannot do this but I'm sure it would be easy enough to build flatiron based tool that does. 
+4. Flatiron has a team working on their framework.  Autocmdr is just me.  I work on it in my spare time often late at night.  I do this because I enjoy it.
+
+# Share
 
 The modular nature of autocmdr command files makes it easy to share using gist, git or similar tool.  Simply copying files into `cmds/` folder can work in many cases.
 

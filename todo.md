@@ -23,6 +23,7 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [ ] co-prompt
 - [ ] file globber
 - [ ] Localization!!
+- [ ] Progress bar??
 
 ### Commander.js
 
