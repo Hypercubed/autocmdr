@@ -7,7 +7,7 @@
     "<%= @name %>": "./bin/<%= @name %>"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha -R spec"
   },
   "author": "<%= @author %>",
   "license": "<%= @license %>",

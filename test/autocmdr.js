@@ -6,7 +6,7 @@ var exec = require('child_process').exec;
 
 var globalCmds = [ 'config', 'completion', 'add', 'edit', 'init', 'rm'  ];
 
-describe('autocmdr', function () {
+describe('autocmdr API', function () {
 	var program = require("../");
 
 	it('should be an Commander instance', function () {
@@ -57,10 +57,34 @@ describe('autocmdr', function () {
 	//	program.parse(['','','rm','XXXtest']);
 	//});
 
-	it('should run without errors', function(done) {
-		exec('node ./bin/autocmdr -g -V', function (error, stdout, stderr) {
+});
+
+describe('autocmdr bin', function(){
+
+	it('--help should run without errors', function(done) {
+		exec('node ./bin/autocmdr --help', function (error, stdout, stderr) {
 			assert(!error);
-			assert.equal(stdout,program.version()+'\n');
+			done();
+		});
+	});
+
+	it('--version should run without errors', function(done) {
+		exec('node ./bin/autocmdr --version', function (error, stdout, stderr) {
+			assert(!error);
+			done();
+		});
+	});
+
+	it('completion should run without errors', function(done) {
+		exec('node ./bin/autocmdr completion', function (error, stdout, stderr) {
+			assert(!error);
+			done();
+		});
+	});
+
+	it('config should run without errors', function(done) {
+		exec('node ./bin/autocmdr config', function (error, stdout, stderr) {
+			assert(!error);
 			done();
 		});
 	});

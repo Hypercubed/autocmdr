@@ -15,8 +15,8 @@
 
 Do one of the following to enable auto-completion in your shell.
 
-* Add completion helper to ~/.bashrc (or ~/.zshrc) `pkgname completion >> ~/.bashrc`
-* Add completion to current shell `. <(pkgname completion)`
+* Add completion helper to ~/.bashrc (or ~/.zshrc) `<%= @name %> completion >> ~/.bashrc`
+* Add completion to current shell `. <(<%= @name %> completion)`
 
 # License
 
