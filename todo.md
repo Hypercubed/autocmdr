@@ -16,6 +16,7 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [x] Add description of plugins to readme
 - [-] Autoload autocmdr.js in cwd.
 	- [ ] Document this
+- [ ] Add prompt and eco to plugins?
 
 ### New features/plugins
 - [x] tabtab autocompletion

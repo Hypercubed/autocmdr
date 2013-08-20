@@ -40,8 +40,9 @@ When running in local mode (not using the `-g` flag) all commands located in the
 
 In global mode (`-g`) you can add and edit commands to the current working directory's `cmds/` folder.  Refering to the example below notice that `autocmdr -g add mycmd` call is in global mode to add the `mycmd` to the cwd.  The second `autocmdr mycmd` call executes the `mycmd` command.  If you change to another directory these commands are no longer available.
 
-    cd yourproject
+    cd example
     autocmdr -g add mycmd
+    autocmdr --help
     autocmdr mycmd
     cd ..
     autocmdr mycmd
@@ -67,11 +68,10 @@ If a set of commands in a folder are useful globally you can convert a set of ta
 
 1. Create an independent autocmdr based app
 
-        cd yourproject
-        npm init
-        autocmdr -g init myapp
+        cd example
+        autocmdr -g init
         npm link autocmdr
-        ./bin/myapp --help
+        ./bin/example --help
 
 2. Make it global
 

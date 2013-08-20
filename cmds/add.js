@@ -5,6 +5,9 @@
  *
  */
 
+
+// TODO: Clean this up!!
+
 module.exports = function (program) {
 	var editor = require('editor');
 	var path = 	require('path');
@@ -15,9 +18,8 @@ module.exports = function (program) {
 		.command('add [cmdfile]')
 		.usage('[cmdfile]')
 		.option('-E, --no-editor', "don\'t open new command file in editor")
-		//.option('-P, --no-prompt', "don\'t prompt for input")
-		// TODO: promot overide
-		// TODO: disable prompting
+		.option('-P, --no-prompt', "don\'t prompt for additional input")
+		.option('--desc [description]', "description")
 		.description('Create a autocmdr command file.')
 		.action(function(name, opts){
 			opts = opts || {};
@@ -26,19 +28,36 @@ module.exports = function (program) {
 			opts.template = opts.template || path.join(__dirname, '../template/');
 			opts.output = opts.output || process.cwd();
 
+			var ctx = {
+		      name: opts.name,
+			  description: opts.desc || ' ',
+		      version: '0.0.0',
+		      yesno: 'no'
+		    };
+
 			var properties = {
 		      name: {
 			        pattern: /^[a-zA-Z0-9\s\-]+$/,
 			        message: 'Name must be only letters, numbers, spaces, or dashes',
-			        default: opts.name,
+			        default: ctx.name,
 			        required: true
 			      },
-			  description: { default: 'A autocmdr command file' },
-		      version: { default: '0.0.0' }  // TODO: validate
-		    };		
+			  description: { default: ctx.description },
+		      version: { default: ctx.version }  // TODO: validate
+		    };
 
+		    if (!opts.prompt)
+		    	prompt.override = ctx;
+
+		    prompt.start();
 
 		    prompt.get({ properties: properties }, function (err, ctx) {
+		    	if (err && err.message == 'canceled') {
+					console.log('\n');
+	            	program.logger.warn('Command initialization skipped');
+	            	return;
+		    	}
+
 		    	ctx.name = ctx.name.replace('.js', '');
 		    	ctx.file = 'cmds/'+ctx.name+'.js';
 
@@ -60,6 +79,8 @@ module.exports = function (program) {
 						prompt.get( yesno , function (err, val) {  // TODO: Prompt to overwrite
 							if (val.yesno == "yes" || val.yesno == "y") {
 								_write()
+							} else {
+								program.logger.warn('Command initialization skipped');
 							}
 						});
 
@@ -89,7 +110,6 @@ module.exports = function (program) {
 							});
 						}							
 					}
-					
 						
 				});
 

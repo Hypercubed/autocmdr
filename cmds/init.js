@@ -8,12 +8,17 @@
  module.exports = function (program) {
 	var path = require('path');
 	var prompt = require('prompt');
-	var exec = require('child_process').exec;
+	var cp = require('child_process');
+	var async = require('async');
 
 	program
 		.command('init [name]')
+		.option('-P, --no-prompt', "don\'t prompt for additional input")
+		.option('--ver [version]', "version number")
+		.option('--desc [description]', "description")
+		.option('--author [author]', "author")
+		.option('--license [license]', "license")
 		// TODO: option to change template
-		// TODO: option to skip prompting
 		// TODO: optional list of commands to pregenerate
 		// TODO: prompt override
 		// TODO: Dry-run?
@@ -28,92 +33,137 @@
 			opts.template = opts.template || path.join(__dirname, '../template/');
 			opts.author = opts.author || program.config.get('author') || '';
 
-			program.logger.log('info', 'Initializing '+opts.name);
+			program.logger.log('info', 'Initializing ',opts.name.bold.blue);
 			program.logger.warn('Not yet full implemented');
-			
-			// TODO: read existing package.json
-			var properties = {
-		      name: {
-			        pattern: /^[a-zA-Z0-9\s\-]+$/,
-			        message: 'Name must be only letters, spaces, or dashes',
-			        default: opts.name,
-			        required: true
-			      },
-		      version: { default: '0.0.0' },  // TODO: validate
-		      description: { default: 'A autocmdr CLI app' },
-		      author: { default: opts.author },
-		      license: { default: 'MIT' },
-		      continue: {
-				  message: 'Is this ok?',
-				  validator: /y[es]*|n[o]?/,
-				  warning: 'Must respond yes or no',
-				  default: 'yes'
-				}
+
+    		ctx = { 
+		    	name: opts.name, 
+		    	version: opts.ver || '0.0.0', 
+		    	description: opts.desc || 'A autocmdr CLI app', 
+		    	author: opts.author, 
+		    	license:  opts.license || 'MIT',
 		    };
 
-			// ['name', 'version', 'description', 'author', 'license']
-			prompt.get({ properties: properties }, function (err, ctx) {
+        	async
+	        	.series([
+	        		_prompt,
+	        		_writeBin,
+	        		_writePackage,
+	        		_getUsage,
+	        		_writeReadme,
+	        		_writeTests,
+	        		_linkAutocmdr
+	        	]);
 
-				if (err && err.message == 'canceled' || ctx && ctx.continue != "yes") {
-					console.log('\n');
-	            	program.logger.warn('Initialization skipped');
-	            } else {
-	            	var bin = path.join(opts.output, 'bin/', ctx.name);
+			// Async functions
+        	function _prompt(done) {
+        		if (!opts.prompt) {
+        			done(null);
+        			return;
+        		}
 
-					// Make the bin/name file. TODO: Make this safe
-					program.logger.info('Adding bin/'+ctx.name);
-					program.eco(
-						path.join(opts.template,'/bin/cmdrexec.eco'), 
-						bin, 
-						ctx
-					);
+        		var properties = {
+			      name: {
+				        pattern: /^[a-zA-Z0-9\s\-]+$/,
+				        message: 'Name must be only letters, spaces, or dashes',
+				        default: ctx.name,
+				        required: true
+				      },
+			      version: { default: ctx.version },  // TODO: validate
+			      description: { default: ctx.description },
+			      author: { default: ctx.author },
+			      license: { default: ctx.license },
+			      continue: {
+					  message: 'Is this ok?',
+					  validator: /y[es]*|n[o]?/,
+					  warning: 'Must respond yes or no',
+					  default: 'yes'
+					}
+			    };
 
-					// Make the package.json. TODO: Make this safe
-					program.logger.info('Adding package.json');
-					program.eco(
-						path.join(opts.template,'package.json.eco'), 
-						path.join(opts.output, 'package.json'),
-						ctx
-					);
+    			prompt.start();
 
-					exec('node '+bin+' --help',
-					  function (error, stdout, stderr) {
+   				prompt.message = program._name.green;
 
-					    if (stdout && error == null) {
-					      ctx.usage = stdout;
-					    } else {
-					    	ctx.usage = '.bin/'+opts.name+' --help';
-					    }
+   				prompt.get({ properties: properties }, function (err, result) {
+					if (err && err.message == 'canceled' || result && result.continue != "yes") {
+		            	program.logger.warn('Initialization skipped');
+		            	done('canceled');
+		            } else {
+		            	ctx = result;
+		            	done(null);
+		            }
+   				});
+        	}
 
-						program.logger.info('Adding Readme.md');
-						program.eco(
-							path.join(opts.template,'Readme.md.eco'), 
-							path.join(opts.output, 'Readme.md'),
-							ctx
-						);
+			
+			function _writeBin(done) {
+				var bin = path.join(opts.output, 'bin/', ctx.name);
 
-					});
+				program.logger.info('Adding', ('bin/'+ctx.name).bold.blue);
+				program.eco(
+					path.join(opts.template,'/bin/cmdrexec.eco'), 
+					bin, 
+					ctx,
+					done
+				);
+			}
 
-					program.logger.info('Adding tests');
-					program.eco(
-						path.join(opts.template,'/test/test.js.eco'), 
-						path.join(opts.output, 'test/', ctx.name+'.js'),
-						ctx
-					);
+			function _getUsage(done) {
+				var bin = path.join(opts.output, 'bin/', ctx.name);
 
-					program.logger.info('Run npm install');
-				}
+				cp.exec('node '+bin+' --help',
+				  function (error, stdout, stderr) {
 
-			});
+				    if (stdout && error == null) {
+				    	ctx.usage = stdout;
+				    } else {
+				    	ctx.usage = '.bin/'+opts.name+' --help';
+				    }
 
-			//  - [x] Eco ./bin/name.js
-			//  - [ ] Eco ./Readme.md
-			//  - [ ] mkdir cmds?
-			//  - [-] npm init
-			//  - [-] npm install --save autocmdr?
-			//  - [-] add bin to package.json
-			//  - [ ] npm link autocmdr
+					done(null);
+
+				});							
+			}
+
+			function _writeTests(done) {
+				program.logger.info('Adding','tests/'.bold.blue);
+				program.eco(
+					path.join(opts.template,'/test/test.js.eco'), 
+					path.join(opts.output, 'test/', ctx.name+'.js'),
+					ctx,
+					done
+				);
+			}
+
+			function _writeReadme(done) {
+				program.logger.info('Adding', 'Readme.md'.bold.blue);
+				program.eco(
+					path.join(opts.template,'Readme.md.eco'), 
+					path.join(opts.output, 'Readme.md'),
+					ctx,
+					done
+				);
+			}
+
+			function _writePackage(done) {
+				program.logger.info('Adding','package.json'.bold.blue);
+				program.eco(
+					path.join(opts.template,'package.json.eco'), 
+					path.join(opts.output, 'package.json'),
+					ctx,
+					done
+				);
+			}
+
+			function _linkAutocmdr(done) {  // TODO: Do this when all done
+				program.logger.info('All done.  Now trying to run npm to link to autocmdr.  Run ' + 'npm install'.bold.yellow + ' if it fails.');
+
+				var win32 = process.platform === 'win32';
+				cp.spawn(win32 ? 'cmd' : 'npm', [win32 ? '/c npm link autocmdr' : 'install'], { stdio: 'inherit' });
+				done(null);
+			}
 			
 		});
-	
+
 };

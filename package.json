@@ -19,7 +19,8 @@
     "nconf": "~0.6.7",
     "didyoumean": "~1.1.0",
     "prompt": "~0.2.11",
-    "commander-tabtab": "git://github.com/Hypercubed/commander-tabtab.js#master"
+    "commander-tabtab": "git://github.com/Hypercubed/commander-tabtab.js#master",
+    "async": "~0.2.9"
   },
   "bugs": {
     "url": "https://github.com/Hypercubed/autocmdr/issues"

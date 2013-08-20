@@ -8,21 +8,7 @@ A autocmdr CLI app
 # Usage
 
 ```
-
-  Usage: example [options] [command]
-
-  Commands:
-
-    mycmd [options]        A autocmdr command file
-    config [key] [value]   Get and set options
-
-  Options:
-
-    -h, --help     output usage information
-    -d, --debug    enable debugger
-    -V, --version  output the version number
-
-
+.bin/example --help
 ```
 
 ## auto-completion

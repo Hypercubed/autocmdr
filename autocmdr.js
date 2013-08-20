@@ -8,7 +8,15 @@ module.exports = function (program) {
 
 	program.eco = cpFileWithRender;  // This is not a plugin... maybe it should be
 
-	function cpFileWithRender(src, dst, context) {
+	function cpFileWithRender(src, dst, context, done) {
+		if (!src || !dst) {
+			done('err');
+			return;
+		}
+
+		context = context || {};
+		done = done || function() {};
+
 		program.logger.debug('Eco\'ing file ' + src + ' to ' + dst);
 
 		context = context || {};
@@ -28,6 +36,7 @@ module.exports = function (program) {
 		    } else {
 		        program.logger.info(dst+" was saved!");
 		    }
+		    done(err);
 		});
 	}
 

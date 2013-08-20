@@ -10,7 +10,7 @@ module.exports = function(program) {
 	program
 		.command('mycmd')
 		.version('0.0.0')
-		.description('A autocmdr command file')
+		.description(' ')
 		.action(function(){
 			// Your code goes here
 		});
