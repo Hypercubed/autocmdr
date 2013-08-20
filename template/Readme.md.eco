@@ -1,0 +1,32 @@
+<%= @name %>
+=============
+
+# Description
+
+<%= @description %>
+
+# Usage
+
+```
+    Usage: <%= @name %> [options] [command]
+
+    Commands:
+
+        config [key] [value]   Get and set options
+
+    Options:
+
+        -h, --help     output usage information
+        -d, --debug    enable debugger
+        -V, --version  output the version number
+```
+
+# License
+
+<%= @license %>
+
+Copyright (c) 2013 <%= @author %>
+
+# Acknowledgments
+
+Built using [autocmdr](https://github.com/Hypercubed/autocmdr).

@@ -10,33 +10,36 @@
 	var prompt = require('prompt');
 
 	program
-		.command('init <name>')
+		.command('init [name]')
 		// TODO: option to change template
-		// TODO: option to disable prompting
+		// TODO: option to skip prompting
+		// TODO: optional cmds to pregenerate
 		// TODO: prompt override
+		// TODO: Dry-run?
 		.version('0.0.0')
 		.description('Create a new autocmdr application here.')
-		.action(function(cmdrfile){
-			cmdrfile = cmdrfile || 'cmdfile';
-			var name = cmdrfile.replace('.js', '');
+		.action(function(name, opts){
+			opts = opts || {};
+			opts.name = name || 'cmdfile';
+			opts.name = opts.name.replace('.js', '');
+			opts.template = opts.template || path.join(__dirname, '../template/');
+			opts.output = opts.output || process.cwd();
+			opts.author = opts.author || program.config.get('author') || '';
 
-			program.logger.log('info', 'Initializing '+name);
+			program.logger.log('info', 'Initializing '+opts.name);
 			program.logger.warn('Not yet full implemented');
-
-			var templateDir = path.join(__dirname, '../templates/');
-			var outDir = process.cwd();
 			
 			// TODO: read existing package.json
 			var properties = {
 		      name: {
 			        pattern: /^[a-zA-Z\s\-]+$/,
 			        message: 'Name must be only letters, spaces, or dashes',
-			        default: name,
+			        default: opts.name,
 			        required: true
 			      },
 		      version: { default: '0.0.0' },  // TODO: validate
 		      description: { default: 'A autocmdr CLI app' },
-		      author: { default: program.config.get('author') || '' },
+		      author: { default: opts.author },
 		      license: { default: 'MIT' },
 		      continue: {
 				  message: 'Is this ok?',
@@ -48,17 +51,45 @@
 
 			// ['name', 'version', 'description', 'author', 'license']
 			prompt.get({ properties: properties }, function (err, ctx) {
-				console.log(ctx);
 
-				if (ctx.continue == "yes") {
+				if (err && err.message == 'canceled' || ctx && ctx.continue != "yes") {
+					console.log('\n');
+	            	program.logger.warn('Initialization skipped');
+	            } else {
+
 					// Make the bin/name file. TODO: Make this safe
-					program.logger.info('Adding bin/'+name);
-					program.eco(templateDir+'cmdr.js.eco', path.join(outDir, 'bin/', cmdrfile), ctx);
+					program.logger.info('Adding bin/'+ctx.name);
+					program.eco(
+						path.join(opts.template,'/bin/cmdrexec.eco'), 
+						path.join(opts.output, 'bin/', ctx.name), 
+						ctx
+					);
 
 					// Make the package.json. TODO: Make this safe
 					program.logger.info('Adding package.json');
-					program.eco(templateDir+'package.json.eco', path.join(outDir, 'package.json'), ctx);
+					program.eco(
+						path.join(opts.template,'package.json.eco'), 
+						path.join(opts.output, 'package.json'),
+						ctx
+					);
 
+					// TODO: Get usage output
+
+					program.logger.info('Adding Readme.md');
+					program.eco(
+						path.join(opts.template,'Readme.md.eco'), 
+						path.join(opts.output, 'Readme.md'),
+						ctx
+					);
+
+					//program.logger.info('Adding tests'); // TODO: should I?
+					//program.eco(
+					//	path.join(opts.template,'/test/test.js.eco'), 
+					//	path.join(outDir, 'test.js'),
+					//	ctx
+					//);
+
+					program.logger.info('Run npm install');
 				}
 
 			});

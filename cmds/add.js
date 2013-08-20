@@ -20,27 +20,30 @@ module.exports = function (program) {
 		// TODO: disable prompting
 		.description('Create a autocmdr command file.')
 		.action(function(name, opts){
-			name = name || 'cmdfile';
-			name = name.replace('.js', '');
+			opts = opts || {};
+			opts.name = name || 'cmdfile';
+			opts.name = opts.name.replace('.js', '');
+			opts.template = opts.template || path.join(__dirname, '../template/');
+			opts.output = opts.output || process.cwd();
 
 			var properties = {
 		      name: {
 			        pattern: /^[a-zA-Z0-9\s\-]+$/,
 			        message: 'Name must be only letters, numbers, spaces, or dashes',
-			        default: name,
+			        default: opts.name,
 			        required: true
 			      },
 			  description: { default: 'A autocmdr command file' },
 		      version: { default: '0.0.0' }  // TODO: validate
 		    };		
 
-			var src = path.join(__dirname, '../templates/cmdfile.js.eco');
 
 		    prompt.get({ properties: properties }, function (err, ctx) {
 		    	ctx.name = ctx.name.replace('.js', '');
 		    	ctx.file = 'cmds/'+ctx.name+'.js';
 
-				var dst = path.join(process.cwd(), ctx.file);
+				var src = path.join(opts.template, '/cmds/cmdrfile.js.eco');
+				var dst = path.join(opts.output, ctx.file);
 
 				fs.exists(dst, function (exists) {
 
@@ -72,10 +75,11 @@ module.exports = function (program) {
 
 					function _edit() {
 						if (opts.editor) {
-							editor(dst, function (code, sig) {
-								program.logger.info('Opening',name.green,'in editor');
+							program.logger.info('Opening',name.green,'in editor');
+							editor(dst, function (code, sig) {  // TODO: Catch error
+								//console.log(code, sig);
 							    //console.log('finished editing with code ' + code);
-							});						
+							});
 						}							
 					}
 					
