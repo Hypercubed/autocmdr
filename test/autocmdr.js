@@ -2,6 +2,7 @@
 
 var assert = require("assert");
 var path = require('path');
+var exec = require('child_process').exec;
 
 var globalCmds = [ 'config', 'completion', 'add', 'edit', 'init', 'rm'  ];
 
@@ -43,17 +44,25 @@ describe('autocmdr', function () {
 	});
 
 	// TODO: run in test directory
-	it('should add local cmds', function() {
-		program.parse(['','','add','XXXtest', '-N']);
-	});
+	//it('should add local cmds', function() {
+	//	program.parse(['','','add','XXXtest', '-E']);
+	//});
 
 	//it('should load local cmds', function() {
 		//require('../lib/loader.js')(program, {  path: path.resolve(__dirname, '../cmds/') });
 		//console.log(program.commands)
 	//});
 
-	it('should rm local cmds', function() {
-		program.parse(['','','rm','XXXtest']);
+	//it('should rm local cmds', function() {
+	//	program.parse(['','','rm','XXXtest']);
+	//});
+
+	it('should run without errors', function(done) {
+		exec('node ./bin/autocmdr -g -V', function (error, stdout, stderr) {
+			assert(!error);
+			assert.equal(stdout,program.version()+'\n');
+			done();
+		});
 	});
 
 });

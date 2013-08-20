@@ -1,7 +1,11 @@
 var assert = require("assert");
+var exec = require('child_process').exec;
 
 describe('<%= @name %>', function(){
-	it('should run without errors', function() {
-
+	it('should run without errors', function(done) {
+		exec('node ./bin/<%= @name %> --help', function (error, stdout, stderr) {
+			assert(!error);
+			done();
+		});
 	});
 });
