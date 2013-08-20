@@ -48,7 +48,7 @@ module.exports = function (program) {
 				fs.exists(dst, function (exists) {
 
 					if (exists) {  
-						program.logger.warn('Command',name.green,'already exists at',dst.blue);
+						program.logger.warn('Command',ctx.name.green,'already exists at',dst.blue);
 
 						var yesno = { name: 'yesno',
 									  message: 'Overwrite?',
@@ -68,14 +68,21 @@ module.exports = function (program) {
 					}
 
 					function _write() {
-						program.logger.info('Initializing command',name.green,'at',dst.blue);
+						program.logger.info('Initializing command',ctx.name.green,'at',dst.blue);
 						program.eco(src, dst, ctx);
 						_edit();
 					}
 
 					function _edit() {
 						if (opts.editor) {
-							program.logger.info('Opening',name.green,'in editor');
+							program.logger.info('Opening',ctx.name.green,'in editor');
+
+							//if (opts.editor === true && program.config.get('editor')) {
+							//	_opts = { editor: program.config.get('editor') };
+							//} else {
+							//	_opts = {};
+							//}
+
 							editor(dst, function (code, sig) {  // TODO: Catch error
 								//console.log(code, sig);
 							    //console.log('finished editing with code ' + code);

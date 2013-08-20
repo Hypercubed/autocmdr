@@ -8,18 +8,15 @@
 # Usage
 
 ```
-    Usage: <%= @name %> [options] [command]
-
-    Commands:
-
-        config [key] [value]   Get and set options
-
-    Options:
-
-        -h, --help     output usage information
-        -d, --debug    enable debugger
-        -V, --version  output the version number
+<%= @usage %>
 ```
+
+## auto-completion
+
+Do one of the following to enable auto-completion in your shell.
+
+* Add completion helper to ~/.bashrc (or ~/.zshrc) `pkgname completion >> ~/.bashrc`
+* Add completion to current shell `. <(pkgname completion)`
 
 # License
 

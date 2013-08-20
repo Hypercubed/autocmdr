@@ -7,11 +7,14 @@
     "<%= @name %>": "./bin/<%= @name %>"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "<%= @author %>",
   "license": "<%= @license %>",
   "dependencies": {
     "autocmdr": "https://github.com/Hypercubed/autocmdr/tarball/master"
+  },
+  "devDependencies": {
+    "mocha": "~1.12.0"
   }
 }

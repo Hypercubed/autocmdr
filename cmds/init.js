@@ -8,22 +8,24 @@
  module.exports = function (program) {
 	var path = require('path');
 	var prompt = require('prompt');
+	var exec = require('child_process').exec;
 
 	program
 		.command('init [name]')
 		// TODO: option to change template
 		// TODO: option to skip prompting
-		// TODO: optional cmds to pregenerate
+		// TODO: optional list of commands to pregenerate
 		// TODO: prompt override
 		// TODO: Dry-run?
+		// TODO: Enable/disable plugins
 		.version('0.0.0')
 		.description('Create a new autocmdr application here.')
 		.action(function(name, opts){
 			opts = opts || {};
-			opts.name = name || 'cmdfile';
+			opts.output = opts.output || process.cwd();
+			opts.name = name || path.basename(opts.output);
 			opts.name = opts.name.replace('.js', '');
 			opts.template = opts.template || path.join(__dirname, '../template/');
-			opts.output = opts.output || process.cwd();
 			opts.author = opts.author || program.config.get('author') || '';
 
 			program.logger.log('info', 'Initializing '+opts.name);
@@ -32,7 +34,7 @@
 			// TODO: read existing package.json
 			var properties = {
 		      name: {
-			        pattern: /^[a-zA-Z\s\-]+$/,
+			        pattern: /^[a-zA-Z0-9\s\-]+$/,
 			        message: 'Name must be only letters, spaces, or dashes',
 			        default: opts.name,
 			        required: true
@@ -56,12 +58,13 @@
 					console.log('\n');
 	            	program.logger.warn('Initialization skipped');
 	            } else {
+	            	var bin = path.join(opts.output, 'bin/', ctx.name);
 
 					// Make the bin/name file. TODO: Make this safe
 					program.logger.info('Adding bin/'+ctx.name);
 					program.eco(
 						path.join(opts.template,'/bin/cmdrexec.eco'), 
-						path.join(opts.output, 'bin/', ctx.name), 
+						bin, 
 						ctx
 					);
 
@@ -73,21 +76,30 @@
 						ctx
 					);
 
-					// TODO: Get usage output
+					exec('node '+bin+' --help',
+					  function (error, stdout, stderr) {
 
-					program.logger.info('Adding Readme.md');
+					    if (stdout && error == null) {
+					      ctx.usage = stdout;
+					    } else {
+					    	ctx.usage = '.bin/'+opts.name+' --help';
+					    }
+
+						program.logger.info('Adding Readme.md');
+						program.eco(
+							path.join(opts.template,'Readme.md.eco'), 
+							path.join(opts.output, 'Readme.md'),
+							ctx
+						);
+
+					});
+
+					program.logger.info('Adding tests');
 					program.eco(
-						path.join(opts.template,'Readme.md.eco'), 
-						path.join(opts.output, 'Readme.md'),
+						path.join(opts.template,'/test/test.js.eco'), 
+						path.join(opts.output, 'test/', ctx.name+'.js'),
 						ctx
 					);
-
-					//program.logger.info('Adding tests'); // TODO: should I?
-					//program.eco(
-					//	path.join(opts.template,'/test/test.js.eco'), 
-					//	path.join(outDir, 'test.js'),
-					//	ctx
-					//);
 
 					program.logger.info('Run npm install');
 				}

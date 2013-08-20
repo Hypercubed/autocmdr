@@ -3,31 +3,31 @@
 _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 
 ### Priority
-- [ ] Finish init function
-	- [ ] exec NPM init
+- [?] Finish init function
+	- [-] exec NPM init
 	- [ ] exec npm link autocmdr or npm install --save autocmdr
-	- [ ] Rename ./.autocmdr and ./autocmdr.js to .myapp and myapp.js	
-- [ ] Finish config
+	- [-] Rename ./.autocmdr and ./autocmdr.js to .myapp and myapp.js	
+- [?] Finish config
 	- [ ] First autocmdr .autocmdr then cwd .autocmdr
-	- [ ] Scaffold bin/app to use .[appname] as config
+	- [-] Scaffold bin/app to use .[appname] as config
 - [x] Update readme with better intro
 - [x] Update to latest commander.js
-- [ ] Add command and plugin file examples to Readme.md
-- [ ] Add description of plugins to readme
-- [x] Autoload autocmdr.js in cwd.
+- [-] Add command and plugin file examples to Readme.md
+- [x] Add description of plugins to readme
+- [-] Autoload autocmdr.js in cwd.
 	- [ ] Document this
 
 ### New features/plugins
 - [x] tabtab autocompletion
 - [x] Did you mean XXX plugin for unknown commands
-- [ ] co-prompt
+- [-] prompter
 - [ ] file globber
 - [ ] Localization!!
 - [ ] Progress bar??
 
 ### Commander.js
 
-- [ ] String commands (autocmdr list -- show)
+- [ ] String commands (autocmdr list show)
 
 ### Auto commander:
 
