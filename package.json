@@ -18,7 +18,8 @@
     "winston": "~0.7.2",
     "nconf": "~0.6.7",
     "didyoumean": "~1.1.0",
-    "tabtab": "0.0.2"
+    "tabtab": "0.0.2",
+    "prompt": "~0.2.11"
   },
   "bugs": {
     "url": "https://github.com/Hypercubed/autocmdr/issues"

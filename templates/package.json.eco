@@ -1,0 +1,17 @@
+{
+  "name": "<%= @name %>",
+  "version": "<%= @version %>",
+  "description": "<%= @description %>",
+  "private": true,
+  "bin": {
+    "<%= @name %>": "./bin/<%= @name %>"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "<%= @author %>",
+  "license": "<%= @license %>",
+  "dependencies": {
+    "autocmdr": "https://github.com/Hypercubed/autocmdr/tarball/master"
+  }
+}

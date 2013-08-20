@@ -9,7 +9,7 @@ module.exports = function (program) {
 	program.eco = cpFileWithRender;  // This is not a plugin... maybe it should be
 
 	function cpFileWithRender(src, dst, context) {
-		program.logger.debug('info', 'Eco\'ing file ' + src + ' to ' + dst);
+		program.logger.debug('Eco\'ing file ' + src + ' to ' + dst);
 
 		context = context || {};
 
@@ -24,9 +24,9 @@ module.exports = function (program) {
 
 		fs.writeFile(dst, reader, function(err) {
 		    if(err) {
-		        program.logger.log('error', err);
+		        program.logger.error(err);
 		    } else {
-		        program.logger.log('info', "The file was saved!");
+		        program.logger.info(dst+" was saved!");
 		    }
 		});
 	}
