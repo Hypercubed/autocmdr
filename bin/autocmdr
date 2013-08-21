@@ -3,6 +3,16 @@
 // node
 var path			= require('path');
 
+var updateNotifier = require('update-notifier');
+var notifier = updateNotifier({
+	packagePath: '../package.json'
+});
+if (notifier.update) {
+    // Notify using the built-in convenience method
+    notifier.notify();
+}
+console.log(notifier.update);
+
 // autocmdr
 var program  = require('../');
 
@@ -14,6 +24,7 @@ require('../lib/help.js')(program);
 var argv = program.normalize(process.argv);
 
 if (argv.indexOf('-g') > -1) {  // Global autocmdr
+	// TODO: --task-dir, -d <dir>
 	require('../lib/loader.js')(program);
 	require('../lib/config.js')(program);
 	//require('../lib/eco.js')(program);
