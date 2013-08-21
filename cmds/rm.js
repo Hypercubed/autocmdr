@@ -7,7 +7,7 @@
 	program
 		.command('rm <cmdfile>')
 		.version('0.0.0')
-		.description('Delete a command.')
+		.description('Delete a command file.')
 		.action(function(cmdfile){
 			var fs = require('fs');
 			var path = require('path');

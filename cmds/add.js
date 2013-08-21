@@ -15,9 +15,10 @@ module.exports = function (program) {
 		.command('add [name]')
 		.usage('[name]')
 		.option('-E, --no-editor', "don\'t open new command file in editor")
+		//.option('--editor <editor>', "Specify editor to use")
 		.option('-P, --no-prompt', "don\'t prompt for additional input")
 		.option('--desc [description]', "description")
-		.description('Create a autocmdr command file.')
+		.description('Create a command file.')
 		.action(function(name, opts){
 			opts = opts || {};
 			opts.name = name || 'name';

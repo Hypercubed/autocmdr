@@ -13,6 +13,7 @@ A autocmdr CLI app
 
   Commands:
 
+    mycmd [options]         
     config [key] [value]   Get and set options
 
   Options:

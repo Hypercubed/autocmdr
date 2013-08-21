@@ -9,7 +9,7 @@ module.exports = function (program) {
 	program
 		.command('edit <name>')
 		.version('0.0.0')
-		.description('Edit command file.')
+		.description('Edit a command file.')
 		.option('--editor <editor>', "Specify editor to use")
 		.action(function(name, opts){
 			opts = opts || {};

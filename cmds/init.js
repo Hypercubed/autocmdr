@@ -21,7 +21,7 @@
 		// TODO: Dry-run?
 		// TODO: Enable/disable plugins
 		.version('0.0.0')
-		.description('Create a new autocmdr application here.')
+		.description('Create a new CLI application.')
 		.action(function(name, opts){
 			opts = opts || {};
 			opts.output = opts.output || process.cwd();

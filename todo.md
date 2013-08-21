@@ -8,9 +8,11 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 	- [x] exec npm link autocmdr or npm install --save autocmdr
 	- [-] Rename ./.autocmdr and ./autocmdr.js to .myapp and myapp.js	
 - [?] Finish config
-	- [ ] First autocmdr .autocmdr then cwd .autocmdr
+	- [ ] Global, user global, cwd
 	- [-] Scaffold bin/app to use .[appname] as config
 	- [ ] Document autocmdr config options
+	- [ ] Default template (add.template, init.template)
+	- [ ] Use config namespaces (core.editor, add.template, etc)?
 - [x] Update readme with better intro
 - [x] Update to latest commander.js
 - [-] Add command and plugin file examples to Readme.md
@@ -31,6 +33,7 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [ ] Localization!!  (would be awesome)
 - [ ] Progress bar??
 - [ ] utile?
+- [ ] update-notifier
 
 ### Commander.js
 

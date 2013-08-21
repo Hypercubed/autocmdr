@@ -38,7 +38,7 @@ describe('autocmdr API', function () {
 		//assert(!!program.loadCmds);
 		//assert(!!program.eco);
 
-		var cmds = program.commands.map(function(d) { return d._name });
+		var cmds = program.commands.map(function(d) { return d._name; });
 		assert.deepEqual(cmds, globalCmds);
 
 	});
@@ -65,6 +65,7 @@ describe('autocmdr bin', function(){
 
 	it('--help should run without errors', function(done) {
 		exec(cmd+'--help', function (error, stdout, stderr) {
+			if (error) return done(error);
 			//console.log(stdout);
 			assert(!error);
 			done();
@@ -73,6 +74,7 @@ describe('autocmdr bin', function(){
 
 	it('--version should run without errors', function(done) {
 		exec(cmd+'--version', function (error, stdout, stderr) {
+			if (error) return done(error);
 			//console.log(stdout);
 			assert(!error);
 			done();
@@ -81,6 +83,7 @@ describe('autocmdr bin', function(){
 
 	it('completion should run without errors', function(done) {
 		exec(cmd+'completion', function (error, stdout, stderr) {
+			if (error) return done(error);
 			//console.log(stdout);
 			assert(!error);
 			done();
@@ -89,6 +92,7 @@ describe('autocmdr bin', function(){
 
 	it('config should run without errors', function(done) {
 		exec(cmd+'config', function (error, stdout, stderr) {
+			if (error) return done(error);
 			//console.log(stdout);
 			assert(!error);
 			done();
@@ -108,9 +112,8 @@ describe('autocmdr bin', function(){
 	*/
 
 	it('add should run without errors', function(done) {
-		this.timeout(0)
-		
 		exec(cmd+'-g add mycmd -P -E', function (error, stdout, stderr) {
+			if (error) return done(error);
 			//console.log(stdout);
 			assert(!error);
 			done();
@@ -118,9 +121,8 @@ describe('autocmdr bin', function(){
 	});
 
 	it('rm should run without errors', function(done) {
-		this.timeout(0)
-		
 		exec(cmd+'-g rm mycmd', function (error, stdout, stderr) {
+			if (error) return done(error);
 			//console.log(stdout);
 			assert(!error);
 			done();
@@ -128,9 +130,8 @@ describe('autocmdr bin', function(){
 	});
 
 	it('should return error on missing command', function(done) {
-		this.timeout(0)
-		
 		exec(cmd+'-g addd', function (error, stdout, stderr) {
+			//if (err) return done(err);
 			//console.log(error,stdout,stderr);
 			assert(error);
 			assert.equal(error.code,1);

@@ -40,27 +40,63 @@ When running in local mode (not using the `-g` flag) all commands located in the
 
 In global mode (`-g`) you can add and edit commands to the current working directory's `cmds/` folder.  Refering to the example below notice that `autocmdr -g add mycmd` call is in global mode to add the `mycmd` to the cwd.  The second `autocmdr mycmd` call executes the `mycmd` command.  If you change to another directory these commands are no longer available.
 
-    cd example
-    autocmdr -g add mycmd
-    autocmdr --help
-    autocmdr mycmd
-    cd ..
-    autocmdr mycmd
-    > warn:    'mytask' is not a known command. See 'autocmdr --help'.
+    > cd example
+    > autocmdr -g --help
 
-Commands available in global mode:
+      Usage: autocmdr [options] [command]
 
-    add <cmdfile>              Create a blank cmdfile.
-    edit [options] <cmd>       Edit command file.
-    init [options] <name>      Create a new autocmdr application here.
-    rm [options] <cmdfile>     Delete a command.
-    
-    Options:
+      Commands:
 
-    -h, --help     output usage information
-    -d, --debug    enable debugger
-    -V, --version  output the version number
-    -g, --global   use global autocmdr tasks
+        add [options] [name]   Create a command file.
+        edit [options] <name>  Edit command file.
+        init [options] [name]  Create a new CLI application.
+        rm [options] <cmdfile> Delete a command.
+        config [key] [value]   Get and set options
+        completion             Print command completion script
+
+      Options:
+
+        -h, --help     output usage information
+        -d, --debug    enable debugger
+        -V, --version  output the version number
+        -g, --global   use global autocmdr tasks
+
+      Bug reports, suggestions, updates:
+       https://github.com/Hypercubed/autocmdr/issues
+
+    > autocmdr -g add mycmd
+
+    prompt: name:  (mycmd)
+    prompt: description:  ( )
+    prompt: version:  (0.0.0)
+    info:    Initializing command mycmd at cmds\mycmd.js
+    info:    Opening mycmd in editor
+    info:    cmds\mycmd.js was saved!
+
+    > autocmdr --help
+
+      Usage: autocmdr [options] [command]
+
+      Commands:
+
+        mycmd [options]
+        config [key] [value]   Get and set options
+        completion             Print command completion script
+
+      Options:
+
+        -h, --help     output usage information
+        -d, --debug    enable debugger
+        -V, --version  output the version number
+        -g, --global   use global autocmdr tasks
+
+      Bug reports, suggestions, updates:
+       https://github.com/Hypercubed/autocmdr/issues
+
+    > autocmdr mycmd
+    > cd ..
+    > autocmdr mycmd
+    > error:    'mycmd' is not a known command. See 'autocmdr --help'.
 
 ## Using autocmdr as a app builder (Library mode)
 
@@ -68,26 +104,62 @@ If a set of commands in a folder are useful globally you can convert a set of ta
 
 1. Create an independent autocmdr based app
 
-        cd example
-        autocmdr -g init
-        npm link autocmdr
-        ./bin/example --help
+
+        > cd example
+        > autocmdr -g init
+        
+        info:    Initializing  example
+        autocmdr: name:  (example)
+        autocmdr: version:  (0.0.0)
+        autocmdr: description:  (A autocmdr CLI app)
+        autocmdr: author:  (J. Harshbarger)
+        autocmdr: license:  (MIT)
+        autocmdr: Is this ok?:  (yes)
+        info:    Adding bin/example
+        info:    Adding package.json
+        info:    Adding Readme.md
+        info:    Adding tests/
+        info:    All done.  Now trying to run npm to link to autocmdr.  Run `npm install` if it fails.
+        
+        > ./bin/example --help
+        
+          Usage: example [options] [command]
+          
+          Commands:
+            mycmd [options]
+            config [key] [value]   Get and set options
+        
+          Options:
+            -h, --help     output usage information
+            -d, --debug    enable debugger
+            -V, --version  output the version number
 
 2. Make it global
 
-        npm link .
-        cd anywhere
-        myapp --help
+        > npm link
+        > cd ..
+        > example --help
 
-The new executable you just created, by default, will have access to the autocmdr plugins as well as the commands in the `cmds/` folder.
+          Usage: example [options] [command]
 
-## Commands and Plugins
+          Commands:
+            mycmd [options]
+            config [key] [value]   Get and set options
+
+          Options:
+            -h, --help     output usage information
+            -d, --debug    enable debugger
+            -V, --version  output the version number
+
+The new executable you just created, by default, will have access to the autocmdr plugins as well as the commands in the `cmds/` folder.  Edit `bin/example` to change these defaults.
+
+## Commander.js components
 
 Commands and plugins are node.js modules that export a single initialization function.  This function is called with a commander.js program and an optional options object.  Commands and plugins have a simple syntax that doesn't deviate far from the syntax established by commander.js itself. See autocmdr's [commands](https://github.com/Hypercubed/autocmdr/tree/master/cmds) and [plugins](https://github.com/Hypercubed/autocmdr/tree/master/lib) for examples.
 
 ## Command modules
 
-The most basic form of a command module is shown below.  Within the function the commander.js program can me modified as any other commander.js program (see [commander.js api documentation](http://visionmedia.github.io/commander.js/)).  
+The most basic form of a command module is shown below.  Within the function the commander.js program is manipulated to add a single command as any other commander.js program (see [commander.js api documentation](http://visionmedia.github.io/commander.js/)).  
 
     module.exports = function (program, options) {
 
@@ -103,7 +175,7 @@ The most basic form of a command module is shown below.  Within the function the
 
 ## Plugin modules
 
-autocmdr plugin modules have the same structure as command modules.  The only differnece is that they are not designed to be automatically loaded.  Plugins are loaded using node's require function again exporting a single initialization function; this time accepting an options object as teh second paramater.  Below are the builtin autocmdr plugins.
+autocmdr plugin modules have the same structure as command modules.  The only difference is that they are not designed to be automatically loaded.  Plugins are loaded using node's require function again exporting a single initialization function; this time accepting an options object as teh second paramater.  Below are the builtin autocmdr plugins.
 
 ### loader
 
@@ -151,6 +223,7 @@ Adding `require('autocmdr/lib/completion.js')(program)` just before `program.par
 # Questions
 
 Q: Doesn't flatiron do the same thing?  You're even using some flatiron modules!  Why not just use [flatiron](https://github.com/flatiron/flatiron) to build your cli applications.
+
 A: Good question with perhaps a few bad answers.
 
 1. Flatiron uses [broadway](https://github.com/flatiron/broadway) for plugins.  This feels very much like a web framework thing.  Honestly, when I first encountered flatiron (before starting to work on autocmdr) I didn't even realize that it had cli support, and after looking at it more later I realized it's cli support was good but still felt like an afterthought.
