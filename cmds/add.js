@@ -1,8 +1,5 @@
-/**
- * This is a autocmdr command/plugin file
- *
- * It exports a single initialization function. 
- *
+/* commander/autocmdr component
+ * This component adds an autocmdr/commander command component from the cmds/ directory.
  */
 
 

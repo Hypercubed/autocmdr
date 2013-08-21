@@ -1,4 +1,8 @@
-module.exports = function (program) {
+/* commander/autocmdr component
+ * This component removes a autocmdr/commander command component from the cmds/ directory.
+ */
+
+ module.exports = function (program) {
 
 	program
 		.command('rm <cmdfile>')

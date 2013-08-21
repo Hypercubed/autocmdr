@@ -25,11 +25,11 @@ describe('autocmdr API', function () {
 		require('../lib/completion.js')(program);
 
 		assert(!!program.logger);
-		assert(!!program.package);
+		//assert(!!program.package);
 		//assert(!!program.eco);
 		assert(!!program.config);
 
-		assert.equal(program.package.description, 'autocmdr');
+		assert.equal(program._description, 'autocmdr');
 	});
 
 	it('should load global cmds without errors', function() {
@@ -60,30 +60,41 @@ describe('autocmdr API', function () {
 });
 
 describe('autocmdr bin', function(){
+	var cmd = 'node '+path.join(process.cwd(), './bin/autocmdr')+' ';
+	process.chdir('./test/example');
 
 	it('--help should run without errors', function(done) {
-		exec('node ./bin/autocmdr --help', function (error, stdout, stderr) {
+		exec(cmd+'--help', function (error, stdout, stderr) {
+			console.log(stdout);
 			assert(!error);
 			done();
 		});
 	});
 
 	it('--version should run without errors', function(done) {
-		exec('node ./bin/autocmdr --version', function (error, stdout, stderr) {
+		exec(cmd+'--version', function (error, stdout, stderr) {
 			assert(!error);
 			done();
 		});
 	});
 
 	it('completion should run without errors', function(done) {
-		exec('node ./bin/autocmdr completion', function (error, stdout, stderr) {
+		exec(cmd+'completion', function (error, stdout, stderr) {
 			assert(!error);
 			done();
 		});
 	});
 
 	it('config should run without errors', function(done) {
-		exec('node ./bin/autocmdr config', function (error, stdout, stderr) {
+		exec(cmd+'config', function (error, stdout, stderr) {
+			assert(!error);
+			done();
+		});
+	});
+
+	it('init should run without errors', function(done) {
+		exec(cmd+'init', function (error, stdout, stderr) {
+			console.log(stdout);
 			assert(!error);
 			done();
 		});

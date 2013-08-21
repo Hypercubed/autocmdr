@@ -1,8 +1,5 @@
-/**
- * This is a autocmdr command/plugin file
- *
- * It exports a single initialization function. 
- *
+/* commander/autocmdr component
+ * This component initializes a new autocmdr/commader cli app using a template.
  */
 
  module.exports = function (program) {

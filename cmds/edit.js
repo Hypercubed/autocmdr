@@ -1,3 +1,7 @@
+/* commander/autocmdr component
+ * This component edits an autocmdr/commander command component from the cmds/ directory.
+ */
+
 module.exports = function (program) {
 	var editor = require('editor');
 	var path = require('path');
