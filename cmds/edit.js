@@ -21,7 +21,7 @@ module.exports = function (program) {
 			//console.log(process.env);
 
 			editor(file, function (code, sig) {
-			    //console.log('finished editing with code ' + code);
+				//console.log('finished editing with code ' + code);
 			});
 
 		});

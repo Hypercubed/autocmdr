@@ -33,65 +33,65 @@
 			program.logger.log('info', 'Initializing ',opts.name.bold.blue);
 			program.logger.warn('Not yet full implemented');
 
-    		ctx = { 
-		    	name: opts.name, 
-		    	version: opts.ver || '0.0.0', 
-		    	description: opts.desc || 'A autocmdr CLI app', 
-		    	author: opts.author, 
-		    	license:  opts.license || 'MIT',
-		    };
+			ctx = {
+				name: opts.name,
+				version: opts.ver || '0.0.0',
+				description: opts.desc || 'A autocmdr CLI app',
+				author: opts.author,
+				license:  opts.license || 'MIT',
+			};
 
-        	async
-	        	.series([
-	        		_prompt,
-	        		_writeBin,
-	        		_writePackage,
-	        		_getUsage,
-	        		_writeReadme,
-	        		_writeTests,
-	        		_linkAutocmdr
-	        	]);
+			async
+				.series([
+					_prompt,
+					_writeBin,
+					_writePackage,
+					_getUsage,
+					_writeReadme,
+					_writeTests,
+					_linkAutocmdr
+			]);
 
 			// Async functions
-        	function _prompt(done) {
-        		if (!opts.prompt) {
-        			done(null);
-        			return;
-        		}
+			function _prompt(done) {
+				if (!opts.prompt) {
+					done(null);
+					return;
+				}
 
-        		var properties = {
-			      name: {
-				        pattern: /^[a-zA-Z0-9\s\-]+$/,
-				        message: 'Name must be only letters, spaces, or dashes',
-				        default: ctx.name,
-				        required: true
-				      },
-			      version: { default: ctx.version },  // TODO: validate
-			      description: { default: ctx.description },
-			      author: { default: ctx.author },
-			      license: { default: ctx.license },
-			      continue: {
-					  message: 'Is this ok?',
-					  validator: /y[es]*|n[o]?/,
-					  warning: 'Must respond yes or no',
-					  default: 'yes'
+				var properties = {
+					name: {
+						pattern: /^[a-zA-Z0-9\s\-]+$/,
+						message: 'Name must be only letters, spaces, or dashes',
+						default: ctx.name,
+						required: true
+					},
+					version: { default: ctx.version },  // TODO: validate
+					description: { default: ctx.description },
+					author: { default: ctx.author },
+					license: { default: ctx.license },
+					continue: {
+						message: 'Is this ok?',
+						validator: /y[es]*|n[o]?/,
+						warning: 'Must respond yes or no',
+						default: 'yes'
 					}
-			    };
+				};
 
-    			prompt.start();
+				prompt.start();
 
-   				prompt.message = program._name.green;
+				prompt.message = program._name.green;
 
-   				prompt.get({ properties: properties }, function (err, result) {
+				prompt.get({ properties: properties }, function (err, result) {
 					if (err && err.message == 'canceled' || result && result.continue != "yes") {
-		            	program.logger.warn('Initialization skipped');
-		            	done('canceled');
-		            } else {
-		            	ctx = result;
-		            	done(null);
-		            }
-   				});
-        	}
+						program.logger.warn('Initialization skipped');
+						done('canceled');
+					} else {
+						ctx = result;
+						done(null);
+					}
+				});
+			}
 
 			
 			function _writeBin(done) {
@@ -99,8 +99,8 @@
 
 				program.logger.info('Adding', ('bin/'+ctx.name).bold.blue);
 				program.eco(
-					path.join(opts.template,'/bin/cmdrexec.eco'), 
-					bin, 
+					path.join(opts.template,'/bin/cmdrexec.eco'),
+					bin,
 					ctx,
 					done
 				);
@@ -110,23 +110,23 @@
 				var bin = path.join(opts.output, 'bin/', ctx.name);
 
 				cp.exec('node '+bin+' --help',
-				  function (error, stdout, stderr) {
+					function (error, stdout, stderr) {
 
-				    if (stdout && error == null) {
-				    	ctx.usage = stdout;
-				    } else {
-				    	ctx.usage = '.bin/'+opts.name+' --help';
-				    }
+					if (stdout && error === null) {
+						ctx.usage = stdout;
+					} else {
+						ctx.usage = '.bin/'+opts.name+' --help';
+					}
 
 					done(null);
 
-				});							
+				});
 			}
 
 			function _writeTests(done) {
 				program.logger.info('Adding','tests/'.bold.blue);
 				program.eco(
-					path.join(opts.template,'/test/test.js.eco'), 
+					path.join(opts.template,'/test/test.js.eco'),
 					path.join(opts.output, 'test/', ctx.name+'.js'),
 					ctx,
 					done
@@ -136,7 +136,7 @@
 			function _writeReadme(done) {
 				program.logger.info('Adding', 'Readme.md'.bold.blue);
 				program.eco(
-					path.join(opts.template,'Readme.md.eco'), 
+					path.join(opts.template,'Readme.md.eco'),
 					path.join(opts.output, 'Readme.md'),
 					ctx,
 					done
@@ -146,7 +146,7 @@
 			function _writePackage(done) {
 				program.logger.info('Adding','package.json'.bold.blue);
 				program.eco(
-					path.join(opts.template,'package.json.eco'), 
+					path.join(opts.template,'package.json.eco'),
 					path.join(opts.output, 'package.json'),
 					ctx,
 					done

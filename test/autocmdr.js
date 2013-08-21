@@ -61,11 +61,11 @@ describe('autocmdr API', function () {
 
 describe('autocmdr bin', function(){
 	var cmd = 'node '+path.join(process.cwd(), './bin/autocmdr')+' ';
-	process.chdir('./test/example');
+	//process.chdir('./test/example');
 
 	it('--help should run without errors', function(done) {
 		exec(cmd+'--help', function (error, stdout, stderr) {
-			console.log(stdout);
+			//console.log(stdout);
 			assert(!error);
 			done();
 		});
@@ -73,6 +73,7 @@ describe('autocmdr bin', function(){
 
 	it('--version should run without errors', function(done) {
 		exec(cmd+'--version', function (error, stdout, stderr) {
+			//console.log(stdout);
 			assert(!error);
 			done();
 		});
@@ -80,6 +81,7 @@ describe('autocmdr bin', function(){
 
 	it('completion should run without errors', function(done) {
 		exec(cmd+'completion', function (error, stdout, stderr) {
+			//console.log(stdout);
 			assert(!error);
 			done();
 		});
@@ -87,15 +89,52 @@ describe('autocmdr bin', function(){
 
 	it('config should run without errors', function(done) {
 		exec(cmd+'config', function (error, stdout, stderr) {
+			//console.log(stdout);
 			assert(!error);
 			done();
 		});
 	});
 
+	/* For safety untill init is safe for existing projects
 	it('init should run without errors', function(done) {
-		exec(cmd+'init', function (error, stdout, stderr) {
-			console.log(stdout);
+		this.timeout(0)
+
+		exec(cmd+'-g init -P', function (error, stdout, stderr) {
+			//console.log(stdout);
 			assert(!error);
+			done();
+		});
+	});
+	*/
+
+	it('add should run without errors', function(done) {
+		this.timeout(0)
+		
+		exec(cmd+'-g add mycmd -P -E', function (error, stdout, stderr) {
+			//console.log(stdout);
+			assert(!error);
+			done();
+		});
+	});
+
+	it('rm should run without errors', function(done) {
+		this.timeout(0)
+		
+		exec(cmd+'-g rm mycmd', function (error, stdout, stderr) {
+			//console.log(stdout);
+			assert(!error);
+			done();
+		});
+	});
+
+	it('should return error on missing command', function(done) {
+		this.timeout(0)
+		
+		exec(cmd+'-g addd', function (error, stdout, stderr) {
+			//console.log(error,stdout,stderr);
+			assert(error);
+			assert.equal(error.code,1);
+			assert(stderr.match(/is not a known command/i));
 			done();
 		});
 	});

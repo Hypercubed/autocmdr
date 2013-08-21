@@ -1,8 +1,8 @@
 // This the autocmdr file.  It is automatically loaded when autocmdr is called in this directory
 
-var fs = 	require('fs');
-var eco = 	require('eco');
-var path = 	require('path');
+var fs = require('fs');
+var eco = require('eco');
+var path = require('path');
 
 module.exports = function (program) {
 
@@ -27,16 +27,16 @@ module.exports = function (program) {
 		var dstdir = path.dirname(dst);
 
 		if (!fs.existsSync(dstdir)) {
-			fs.mkdirSync(dstdir)
+			fs.mkdirSync(dstdir);
 		}
 
 		fs.writeFile(dst, reader, function(err) {
-		    if(err) {
-		        program.logger.error(err);
-		    } else {
-		        program.logger.info(dst+" was saved!");
-		    }
-		    done(err);
+			if(err) {
+				program.logger.error(err);
+			} else {
+				program.logger.info(dst+" was saved!");
+			}
+			done(err);
 		});
 	}
 

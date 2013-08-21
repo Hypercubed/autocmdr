@@ -7,7 +7,7 @@
 
 module.exports = function (program) {
 	var editor = require('editor');
-	var path = 	require('path');
+	var path = require('path');
 	var fs = require('fs');
 	var prompt = require('prompt');
 
@@ -26,56 +26,56 @@ module.exports = function (program) {
 			opts.output = opts.output || process.cwd();
 
 			var ctx = {
-		      name: opts.name,
-			  description: opts.desc || ' ',
-		      version: '0.0.0',
-		      yesno: 'no'
-		    };
+				name: opts.name,
+				description: opts.desc || ' ',
+				version: '0.0.0',
+				yesno: 'no'
+			};
 
 			var properties = {
-		      name: {
-			        pattern: /^[a-zA-Z0-9\s\-]+$/,
-			        message: 'Name must be only letters, numbers, spaces, or dashes',
-			        default: ctx.name,
-			        required: true
-			      },
-			  description: { default: ctx.description },
-		      version: { default: ctx.version }  // TODO: validate
-		    };
+				name: {
+					pattern: /^[a-zA-Z0-9\s\-]+$/,
+					message: 'Name must be only letters, numbers, spaces, or dashes',
+					default: ctx.name,
+					required: true
+				},
+				description: { default: ctx.description },
+				version: { default: ctx.version }  // TODO: validate
+			};
 
-		    if (!opts.prompt)
-		    	prompt.override = ctx;
+			if (!opts.prompt)
+				prompt.override = ctx;
 
-		    prompt.start();
+			prompt.start();
 
-		    prompt.get({ properties: properties }, function (err, ctx) {
-		    	if (err && err.message == 'canceled') {
+			prompt.get({ properties: properties }, function (err, ctx) {
+				if (err && err.message == 'canceled') {
 					console.log('\n');
-	            	program.logger.warn('Command initialization skipped');
-	            	return;
-		    	}
+					program.logger.warn('Command initialization skipped');
+					return;
+				}
 
-		    	ctx.name = ctx.name.replace('.js', '');
-		    	ctx.file = 'cmds/'+ctx.name+'.js';
+				ctx.name = ctx.name.replace('.js', '');
+				ctx.file = 'cmds/'+ctx.name+'.js';
 
 				var src = path.join(opts.template, '/cmds/cmdrfile.js.eco');
 				var dst = path.join(opts.output, ctx.file);
 
 				fs.exists(dst, function (exists) {
 
-					if (exists) {  
+					if (exists) {
 						program.logger.warn('Command',ctx.name.green,'already exists at',dst.blue);
 
 						var yesno = { name: 'yesno',
-									  message: 'Overwrite?',
-									  validator: /y[es]*|n[o]?/,
-									  warning: 'Must respond yes or no',
-									  default: 'no'
-									};
+							message: 'Overwrite?',
+							validator: /y[es]*|n[o]?/,
+							warning: 'Must respond yes or no',
+							default: 'no'
+						};
 
 						prompt.get( yesno , function (err, val) {  // TODO: Prompt to overwrite
 							if (val.yesno == "yes" || val.yesno == "y") {
-								_write()
+								_write();
 							} else {
 								program.logger.warn('Command initialization skipped');
 							}
@@ -103,14 +103,14 @@ module.exports = function (program) {
 
 							editor(dst, function (code, sig) {  // TODO: Catch error
 								//console.log(code, sig);
-							    //console.log('finished editing with code ' + code);
+								//console.log('finished editing with code ' + code);
 							});
-						}							
+						}
 					}
-						
+					
 				});
 
-		    });
+			});
 
 		});
 

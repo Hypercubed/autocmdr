@@ -19,8 +19,8 @@
 			var file = path.join(process.cwd(), 'cmds/', cmdfile);  // Handle paths, edit command wherever it is.
 
 			if (fs.existsSync(file)) {
-				fs.unlinkSync(file)
-				program.logger.info('Successfully deleted ',cmdfile.green);					
+				fs.unlinkSync(file);
+				program.logger.info('Successfully deleted ',cmdfile.green);
 			} else {
 				program.logger.warn('Command',cmdfile.green,'not found');
 			}
