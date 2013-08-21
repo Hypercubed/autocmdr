@@ -12,16 +12,17 @@ module.exports = function (program) {
 	var prompt = require('prompt');
 
 	program
-		.command('add [cmdfile]')
-		.usage('[cmdfile]')
+		.command('add [name]')
+		.usage('[name]')
 		.option('-E, --no-editor', "don\'t open new command file in editor")
 		.option('-P, --no-prompt', "don\'t prompt for additional input")
 		.option('--desc [description]', "description")
 		.description('Create a autocmdr command file.')
 		.action(function(name, opts){
 			opts = opts || {};
-			opts.name = name || 'cmdfile';
+			opts.name = name || 'name';
 			opts.name = opts.name.replace('.js', '');
+			opts.editor = opts.editor === false ? false : program.config.get('editor') !== 'false';
 			opts.template = opts.template || path.join(__dirname, '../template/');
 			opts.output = opts.output || process.cwd();
 
@@ -95,15 +96,14 @@ module.exports = function (program) {
 						if (opts.editor) {
 							program.logger.info('Opening',ctx.name.green,'in editor');
 
-							//if (opts.editor === true && program.config.get('editor')) {
-							//	_opts = { editor: program.config.get('editor') };
-							//} else {
-							//	_opts = {};
-							//}
+							if (opts.editor === true && program.config.get('editor')) {
+								_opts = { editor: program.config.get('editor') };
+							} else {
+								_opts = {};
+							}
 
-							editor(dst, function (code, sig) {  // TODO: Catch error
-								//console.log(code, sig);
-								//console.log('finished editing with code ' + code);
+							editor(dst, _opts, function (code, sig) {  // TODO: Catch error
+								program.logger.debug('finished editing with code ' + code);
 							});
 						}
 					}

@@ -7,21 +7,30 @@ module.exports = function (program) {
 	var path = require('path');
 
 	program
-		.command('edit <cmd>')
+		.command('edit <name>')
 		.version('0.0.0')
 		.description('Edit command file.')
-		.action(function(cmdfile){
-			// export VISUAL=`cygpath -w "/cygdrive/c/Program Files/Sublime Text 2/sublime_text.exe"`
+		.option('--editor <editor>', "Specify editor to use")
+		.action(function(name, opts){
+			opts = opts || {};
+			opts.name = name;
+			opts.name = opts.name.replace('.js', '');
+			opts.editor = opts.editor || program.config.get('editor');
 
-			if (!cmdfile.match('.js'))
-				cmdfile += '.js';
+			var file = path.join(process.cwd(), 'cmds/', opts.name+'.js');
 
-			var file = path.join(process.cwd(), 'cmds/', cmdfile);  // Handle paths, edit command wherever it is.
+			program.logger.info('Opening',file.green,'in editor');
 
-			//console.log(process.env);
+			if (opts.editor !== false  && opts.editor !== "false") {
+				_opts = { editor: opts.editor };
+				program.logger.debug('Launching',opts.editor);
+			} else {
+				_opts = {};
+				program.logger.debug('Launching default editor');
+			}
 
-			editor(file, function (code, sig) {
-				//console.log('finished editing with code ' + code);
+			editor(file, _opts, function (code, sig) {
+				program.logger.debug('finished editing with code ' + code);
 			});
 
 		});
