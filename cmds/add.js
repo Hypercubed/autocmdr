@@ -9,7 +9,9 @@ module.exports = function (program) {
 	var editor = require('editor');
 	var path = require('path');
 	var fs = require('fs');
-	var prompt = require('prompt');
+
+	var prompt = require('../lib/prompt')(program);
+	var render = require('../lib/render')(program);
 
 	program
 		.command('add [name]')
@@ -53,7 +55,7 @@ module.exports = function (program) {
 			prompt.get({ properties: properties }, function (err, ctx) {
 				if (err && err.message == 'canceled') {
 					console.log('\n');
-					program.logger.warn('Command initialization skipped');
+					program.log.warn('Command initialization skipped');
 					return;
 				}
 
@@ -66,7 +68,7 @@ module.exports = function (program) {
 				fs.exists(dst, function (exists) {
 
 					if (exists) {
-						program.logger.warn('Command',ctx.name.green,'already exists at',dst.blue);
+						program.log.warn('Command',ctx.name.green,'already exists at',dst.blue);
 
 						var yesno = { name: 'yesno',
 							message: 'Overwrite?',
@@ -79,7 +81,7 @@ module.exports = function (program) {
 							if (val.yesno == "yes" || val.yesno == "y") {
 								_write();
 							} else {
-								program.logger.warn('Command initialization skipped');
+								program.log.warn('Command initialization skipped');
 							}
 						});
 
@@ -88,14 +90,14 @@ module.exports = function (program) {
 					}
 
 					function _write() {
-						program.logger.info('Initializing command',ctx.name.green,'at',dst.blue);
-						program.eco(src, dst, ctx);
+						program.log.info('Initializing command',ctx.name.green,'at',dst.blue);
+						render(src, dst, ctx);
 						_edit();
 					}
 
 					function _edit() {
 						if (opts.editor) {
-							program.logger.info('Opening',ctx.name.green,'in editor');
+							program.log.info('Opening',ctx.name.green,'in editor');
 
 							if (opts.editor === true && program.config.get('editor')) {
 								_opts = { editor: program.config.get('editor') };
@@ -104,7 +106,7 @@ module.exports = function (program) {
 							}
 
 							editor(dst, _opts, function (code, sig) {  // TODO: Catch error
-								program.logger.debug('finished editing with code ' + code);
+								program.log.debug('finished editing with code ' + code);
 							});
 						}
 					}

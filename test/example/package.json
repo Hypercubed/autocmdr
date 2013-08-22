@@ -12,7 +12,7 @@
   "author": "J. Harshbarger",
   "license": "MIT",
   "dependencies": {
-    "autocmdr": "git://github.com/Hypercubed/autocmdr.git#master"
+    "autocmdr": "https://github.com/Hypercubed/autocmdr/tarball/master"
   },
   "devDependencies": {
     "mocha": "~1.12.0"

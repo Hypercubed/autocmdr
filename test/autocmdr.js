@@ -24,7 +24,7 @@ describe('autocmdr API', function () {
 		require('../lib/config.js')(program, {  path: path.resolve(__dirname, '../.autocmdr') });
 		require('../lib/completion.js')(program);
 
-		assert(!!program.logger);
+		assert(!!program.log);
 		//assert(!!program.package);
 		//assert(!!program.eco);
 		assert(!!program.config);
@@ -129,13 +129,24 @@ describe('autocmdr bin', function(){
 		});
 	});
 
-	it('should return error on missing command', function(done) {
+	it('should return error on unknown command', function(done) {
 		exec(cmd+'-g addd', function (error, stdout, stderr) {
 			//if (err) return done(err);
 			//console.log(error,stdout,stderr);
 			assert(error);
 			assert.equal(error.code,1);
 			assert(stderr.match(/is not a known command/i));
+			done();
+		});
+	});
+
+	it('should return error on missing command', function(done) {
+		exec(cmd+'-g', function (error, stdout, stderr) {
+			//if (err) return done(err);
+			//console.log(error,stdout,stderr);
+			assert(error);
+			assert.equal(error.code,1);
+			assert(stderr.match(/No command specified/i));
 			done();
 		});
 	});

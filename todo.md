@@ -8,7 +8,7 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 	- [x] exec npm link autocmdr or npm install --save autocmdr
 	- [-] Rename ./.autocmdr and ./autocmdr.js to .myapp and myapp.js	
 - [?] Finish config
-	- [ ] Global, user global, cwd
+	- [-] Global, user global, cwd?
 	- [-] Scaffold bin/app to use .[appname] as config
 	- [ ] Document autocmdr config options
 	- [ ] Default template (add.template, init.template)
@@ -19,11 +19,12 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [x] Add description of plugins to readme
 - [-] Autoload autocmdr.js in cwd.
 	- [?] Document this
-- [ ] Make final decision on "plugins"
+- [ ] Make final decision on "plugins"!!
 	- [ ] Namespace
 	- [ ] Plugins vs. components
 	- [ ] Add prompt and eco to plugins?
 	- [ ] Guidelines for what should be a plugin/component
+- [ ] Be consistence in Readme (plugin vs. componanet, executable vs. commander.js app vs. cli)
 
 ### New features/plugins
 - [x] tabtab autocompletion

@@ -20,9 +20,9 @@
 
 			if (fs.existsSync(file)) {
 				fs.unlinkSync(file);
-				program.logger.info('Successfully deleted ',cmdfile.green);
+				program.log.info('Successfully deleted ',cmdfile.green);
 			} else {
-				program.logger.warn('Command',cmdfile.green,'not found');
+				program.log.warn('Command',cmdfile.green,'not found');
 			}
 			
 		});

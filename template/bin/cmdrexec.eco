@@ -9,9 +9,11 @@ require('autocmdr/lib/package.js')(program);
 require('autocmdr/lib/config.js')(program);
 
 program
-	.on('*', function(name) { 
-		program.logger.log('warn', '\''+name+'\' is not a known command. See \''+program._name+' --help\'.');
+	.on('*', function(name) {
+		program.log.log('warn', '\''+name+'\' is not a known command. See \''+program._name+' --help\'.');
 	});
+
+require('autocmdr/lib/completion.js')(program);
 
 program
 	.parse(process.argv);

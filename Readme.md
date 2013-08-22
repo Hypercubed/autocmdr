@@ -187,7 +187,7 @@ Adding `require('autocmdr/lib/loader.js')(program)` will load all modules in the
 
 The logger plugin uses [Winston](https://github.com/flatiron/winston) for logging.
 
-Adding `require('autocmdr/lib/logger.js')(program)` will add `program.logger` to your application.  The plugin will enable  output to the terminal depending on the log level.  The plugin will also add the `-d` option to your application to enable debug logging.  Then logging can be done like this:
+Adding `require('autocmdr/lib/logger.js')(program)` will add `program.log` to your application.  The plugin will enable  output to the terminal depending on the log level.  The plugin will also add the `-d` option to your application to enable debug logging.  Then logging can be done like this:
 
     program.log('info', 'Hello!');
     program.info('Hello again');

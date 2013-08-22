@@ -15,6 +15,7 @@ A autocmdr CLI app
 
     mycmd [options]         
     config [key] [value]   Get and set options
+    completion             Print command completion script
 
   Options:
 

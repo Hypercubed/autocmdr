@@ -4,9 +4,12 @@
 
  module.exports = function (program) {
 	var path = require('path');
-	var prompt = require('prompt');
 	var cp = require('child_process');
 	var async = require('async');
+	var spawn = require('win-spawn');
+
+	var prompt = require('../lib/prompt')(program);
+	var render = require('../lib/render')(program);
 
 	program
 		.command('init [name]')
@@ -15,6 +18,7 @@
 		.option('--desc [description]', "description")
 		.option('--author [author]', "author")
 		.option('--license [license]', "license")
+		.option('-l, --link', 'Link to autocmdr instead of installing')
 		// TODO: option to change template
 		// TODO: optional list of commands to pregenerate
 		// TODO: prompt override
@@ -29,16 +33,16 @@
 			opts.name = opts.name.replace('.js', '');
 			opts.template = opts.template || path.join(__dirname, '../template/');
 			opts.author = opts.author || program.config.get('author') || '';
+			opts.link = opts.link || false;
 
-			program.logger.log('info', 'Initializing ',opts.name.bold.blue);
-			program.logger.warn('Not yet full implemented');
+			program.log.log('info', 'Initializing ',opts.name.bold.blue);
 
 			ctx = {
 				name: opts.name,
 				version: opts.ver || '0.0.0',
 				description: opts.desc || 'A autocmdr CLI app',
 				author: opts.author,
-				license:  opts.license || 'MIT',
+				license:  opts.license || 'MIT'
 			};
 
 			async
@@ -76,15 +80,14 @@
 						warning: 'Must respond yes or no',
 						default: 'yes'
 					}
+					//TODO: prompt to link or install?
 				};
 
 				prompt.start();
 
-				prompt.message = program._name.green;
-
 				prompt.get({ properties: properties }, function (err, result) {
 					if (err && err.message == 'canceled' || result && result.continue != "yes") {
-						program.logger.warn('Initialization skipped');
+						program.log.warn('Initialization skipped');
 						done('canceled');
 					} else {
 						ctx = result;
@@ -97,8 +100,8 @@
 			function _writeBin(done) {
 				var bin = path.join(opts.output, 'bin/', ctx.name);
 
-				program.logger.info('Adding', ('bin/'+ctx.name).bold.blue);
-				program.eco(
+				program.log.info('Adding', ('bin/'+ctx.name).bold.blue);
+				render(
 					path.join(opts.template,'/bin/cmdrexec.eco'),
 					bin,
 					ctx,
@@ -124,8 +127,8 @@
 			}
 
 			function _writeTests(done) {
-				program.logger.info('Adding','tests/'.bold.blue);
-				program.eco(
+				program.log.info('Adding','tests/'.bold.blue);
+				render(
 					path.join(opts.template,'/test/test.js.eco'),
 					path.join(opts.output, 'test/', ctx.name+'.js'),
 					ctx,
@@ -134,8 +137,8 @@
 			}
 
 			function _writeReadme(done) {
-				program.logger.info('Adding', 'Readme.md'.bold.blue);
-				program.eco(
+				program.log.info('Adding', 'Readme.md'.bold.blue);
+				render(
 					path.join(opts.template,'Readme.md.eco'),
 					path.join(opts.output, 'Readme.md'),
 					ctx,
@@ -144,8 +147,8 @@
 			}
 
 			function _writePackage(done) {
-				program.logger.info('Adding','package.json'.bold.blue);
-				program.eco(
+				program.log.info('Adding','package.json'.bold.blue);
+				render(
 					path.join(opts.template,'package.json.eco'),
 					path.join(opts.output, 'package.json'),
 					ctx,
@@ -154,11 +157,12 @@
 			}
 
 			function _linkAutocmdr(done) {  // TODO: Do this when all done
-				program.logger.info('All done.  Now trying to run npm to link to autocmdr.  Run ' + 'npm install'.bold.yellow + ' if it fails.');
+				program.log.info('All done.  Now trying to run npm to install or link to autocmdr.  Run ' + 'npm install'.bold.yellow + ' if it fails.');
 
-				var win32 = process.platform === 'win32';
-				cp.spawn(win32 ? 'cmd' : 'npm', [win32 ? '/c npm link autocmdr' : 'install'], { stdio: 'inherit' });
+				var args = (opts.link) ? ['link','autocmdr'] : ['install'];
+				spawn('npm', args, { stdio: 'inherit' });
 				done(null);
+
 			}
 			
 		});

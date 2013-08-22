@@ -19,18 +19,18 @@ module.exports = function (program) {
 
 			var file = path.join(process.cwd(), 'cmds/', opts.name+'.js');
 
-			program.logger.info('Opening',file.green,'in editor');
+			program.log.info('Opening',file.green,'in editor');
 
 			if (opts.editor !== false  && opts.editor !== "false") {
 				_opts = { editor: opts.editor };
-				program.logger.debug('Launching',opts.editor);
+				program.log.debug('Launching',opts.editor);
 			} else {
 				_opts = {};
-				program.logger.debug('Launching default editor');
+				program.log.debug('Launching default editor');
 			}
 
 			editor(file, _opts, function (code, sig) {
-				program.logger.debug('finished editing with code ' + code);
+				program.log.debug('finished editing with code ' + code);
 			});
 
 		});
