@@ -33,7 +33,7 @@ module.exports = function (program) {
 
 			var ctx = {
 				name: opts.name,
-				description: opts.desc || ' ',
+				description: opts.desc || 'Command description',
 				version: '0.0.0',
 				yesno: 'no'
 			};
@@ -43,14 +43,18 @@ module.exports = function (program) {
 				_overWritePrompt,
 				_write,
 				_edit
-			]);
+			], function(err,result) {
+				if (err)
+					program.log.error(err);
+			});
+
+			return;
 
 			function _prompt(done) {
 
 				if (!opts.prompt) {
 					prompt.override = ctx;
-					done(null);
-					return;
+					return done(null);
 				}
 
 				var properties = {
@@ -89,7 +93,7 @@ module.exports = function (program) {
 				ctx.dst = path.join(opts.output, ctx.file);
 
 				fs.exists(ctx.dst, function (exists) {
-					if (!exists) done(null);
+					if (!exists) return done(null);
 
 					program.log.warn('Command',ctx.name.green,'already exists');
 

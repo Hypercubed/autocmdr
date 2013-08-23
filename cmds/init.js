@@ -51,29 +51,7 @@
 				yesno: 'no'
 			};
 
-			async.auto({
-				prompt: [ 
-					_prompt ],
-				overwritePrompt: [ 'prompt',
-					_overWritePrompt],
-				writeBin: [ 'overwritePrompt',
-					_writeBin],
-				writePackage: [ 'overwritePrompt',
-					_writePackage],
-				getUsage: ['writeBin','writePackage',
-					_getUsage],
-				writeReadme: ['getUsage',
-					_writeReadme],
-				writeTests: ['overwritePrompt',
-					_writeTests],
-				linkAutocmdr: ['writeReadme', 'writeTests',
-					_linkAutocmdr]
-			}, function(err,result) {
-				if (err)
-					return program.log.error(err);
-			});
-
-			/* async.series([
+			async.series([
 				_prompt,
 				_overWritePrompt,
 				_writeBin,
@@ -85,14 +63,13 @@
 			], function(err,result) {
 				if (err)
 					program.log.error(err);
-			}); */
+			});
 
 			// Async functions
 			function _prompt(done) {
 				if (!opts.prompt) {
 					prompt.override = ctx;
-					done(null);
-					return;
+					return done(null);
 				}
 
 				var properties = {
@@ -120,11 +97,12 @@
 				prompt.get({ properties: properties }, function (err, result) {
 					if (err && err.message == 'canceled' || result && result.continue != "yes") {
 						program.log.warn('Initialization skipped');
-						done('canceled');
-					} else {
-						ctx = result;
-						done(null);
+						return done('canceled');
 					}
+
+					ctx = result;
+					done(null);
+
 				});
 			}
 
@@ -152,7 +130,7 @@
 						ctx.usage = 'node ./bin/'+opts.name+' --help';
 					}
 
-					done(null);
+					return done(null);
 
 				});
 			}
@@ -195,10 +173,9 @@
 					prompt.get( yesno , function (err, val) {  // TODO: Prompt to overwrite
 						if (val.yesno != "yes" && val.yesno != "y") {
 							program.log.warn('Initialization skipped');
-							done('Initialization skipped');
-						} else {
-							done(null);
+							return done('Initialization skipped');
 						}
+						done(null);
 					});
 
 				});
@@ -219,8 +196,7 @@
 
 				var args = (opts.link) ? ['link','autocmdr'] : ['install'];
 				spawn('npm', args, { stdio: 'inherit' });
-				done(null);
-
+				return done(null);
 			}
 	
 		});
