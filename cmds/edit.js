@@ -1,5 +1,5 @@
 /* commander/autocmdr component
- * This component edits an autocmdr/commander command component from the cmds/ directory.
+ * This component opens the autocmdr/commander in your editor.
  */
 
 module.exports = function (program) {

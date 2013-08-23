@@ -20,7 +20,9 @@
     "didyoumean": "~1.1.0",
     "prompt": "~0.2.11",
     "commander-tabtab": "git://github.com/Hypercubed/commander-tabtab.js#master",
-    "async": "~0.2.9"
+    "async": "~0.2.9",
+    "xtend": "~2.0.6",
+    "mkdirp": "~0.3.5"
   },
   "bugs": {
     "url": "https://github.com/Hypercubed/autocmdr/issues"

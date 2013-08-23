@@ -3,10 +3,11 @@
 // need to `npm link autocmdr`
 var program  = require('autocmdr');
 
-require('autocmdr/lib/logger.js')(program);
-require('autocmdr/lib/loader.js')(program);
-require('autocmdr/lib/package.js')(program);
-require('autocmdr/lib/config.js')(program);
+require('autocmdr/lib/logger')(program);
+require('autocmdr/lib/loader')(program);
+require('autocmdr/lib/package')(program);
+require('autocmdr/lib/config')(program);
+require('autocmdr/lib/help')(program);
 
 program
 	.on('*', function(name) {

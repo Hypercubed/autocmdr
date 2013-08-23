@@ -1,31 +1,33 @@
 var assert = require("assert");
 var exec = require('child_process').exec;
+var path = require('path');
 
 describe('<%= @name %> bin', function(){
+	var cmd = 'node '+path.join(__dirname, '../bin/<%= @name %>')+' ';
 
 	it('--help should run without errors', function(done) {
-		exec('node ./bin/<%= @name %> --help', function (error, stdout, stderr) {
+		exec(cmd+'--help', function (error, stdout, stderr) {
 			assert(!error);
 			done();
 		});
 	});
 
 	it('--version should run without errors', function(done) {
-		exec('node ./bin/<%= @name %> --version', function (error, stdout, stderr) {
+		exec(cmd+'--version', function (error, stdout, stderr) {
 			assert(!error);
 			done();
 		});
 	});
 
 	it('completion should run without errors', function(done) {
-		exec('node ./bin/<%= @name %> completion', function (error, stdout, stderr) {
+		exec(cmd+'completion', function (error, stdout, stderr) {
 			assert(!error);
 			done();
 		});
 	});
 
 	it('config should run without errors', function(done) {
-		exec('node ./bin/<%= @name %> config', function (error, stdout, stderr) {
+		exec(cmd+'config', function (error, stdout, stderr) {
 			assert(!error);
 			done();
 		});

@@ -1,8 +1,5 @@
-/**
- * This is a autocmdr command/plugin file
- *
+/* commander/autocmdr component
  * It exports a single initialization function. 
- *
  */
 
 module.exports = function(program) {

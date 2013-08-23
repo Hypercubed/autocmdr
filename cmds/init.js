@@ -4,9 +4,12 @@
 
  module.exports = function (program) {
 	var path = require('path');
+	var fs = require('fs');
 	var cp = require('child_process');
 	var async = require('async');
 	var spawn = require('win-spawn');
+
+	var xtend = require('xtend');
 
 	var prompt = require('../lib/prompt')(program);
 	var render = require('../lib/render')(program);
@@ -14,10 +17,10 @@
 	program
 		.command('init [name]')
 		.option('-P, --no-prompt', "don\'t prompt for additional input")
-		.option('--ver [version]', "version number")
-		.option('--desc [description]', "description")
-		.option('--author [author]', "author")
-		.option('--license [license]', "license")
+		//.option('--ver [version]', "version number")
+		//.option('--desc [description]', "description")
+		//.option('--author [author]', "author")
+		//.option('--license [license]', "license")
 		.option('-l, --link', 'Link to autocmdr instead of installing')
 		// TODO: option to change template
 		// TODO: optional list of commands to pregenerate
@@ -27,38 +30,67 @@
 		.version('0.0.0')
 		.description('Create a new CLI application.')
 		.action(function(name, opts){
-			opts = opts || {};
-			opts.output = opts.output || process.cwd();
-			opts.name = name || path.basename(opts.output);
-			opts.name = opts.name.replace('.js', '');
-			opts.template = opts.template || path.join(__dirname, '../template/');
-			opts.author = opts.author || program.config.get('author') || '';
-			opts.link = opts.link || false;
 
-			program.log.log('info', 'Initializing ',opts.name.bold.blue);
-
-			ctx = {
-				name: opts.name,
-				version: opts.ver || '0.0.0',
-				description: opts.desc || 'A autocmdr CLI app',
-				author: opts.author,
-				license:  opts.license || 'MIT'
+			var defaults ={
+				output: process.cwd(),
+				name: path.basename(process.cwd()),
+				template: path.join(__dirname, '../template/'),
+				link: false
 			};
 
-			async
-				.series([
-					_prompt,
-					_writeBin,
-					_writePackage,
-					_getUsage,
-					_writeReadme,
-					_writeTests,
-					_linkAutocmdr
-			]);
+			opts = xtend(defaults, opts || {});
+
+			program.log.info('Initializing ',opts.name.bold.blue);
+
+			var ctx = {
+				name: opts.name,
+				version: '0.0.0',
+				description: 'A autocmdr CLI app',
+				author: program.config.get('author') || '',
+				license:  opts.license || 'MIT',
+				yesno: 'no'
+			};
+
+			async.auto({
+				prompt: [ 
+					_prompt ],
+				overwritePrompt: [ 'prompt',
+					_overWritePrompt],
+				writeBin: [ 'overwritePrompt',
+					_writeBin],
+				writePackage: [ 'overwritePrompt',
+					_writePackage],
+				getUsage: ['writeBin','writePackage',
+					_getUsage],
+				writeReadme: ['getUsage',
+					_writeReadme],
+				writeTests: ['overwritePrompt',
+					_writeTests],
+				linkAutocmdr: ['writeReadme', 'writeTests',
+					_linkAutocmdr]
+			}, function(err,result) {
+				if (err)
+					return program.log.error(err);
+			});
+
+			/* async.series([
+				_prompt,
+				_overWritePrompt,
+				_writeBin,
+				_writePackage,
+				_getUsage,
+				_writeReadme,
+				_writeTests,
+				_linkAutocmdr
+			], function(err,result) {
+				if (err)
+					program.log.error(err);
+			}); */
 
 			// Async functions
 			function _prompt(done) {
 				if (!opts.prompt) {
+					prompt.override = ctx;
 					done(null);
 					return;
 				}
@@ -110,15 +142,14 @@
 			}
 
 			function _getUsage(done) {
-				var bin = path.join(opts.output, 'bin/', ctx.name);
+				var bin = path.join(opts.output, './bin/', ctx.name);
 
-				cp.exec('node '+bin+' --help',
-					function (error, stdout, stderr) {
+				cp.exec('node '+bin+' --help', function (error, stdout, stderr) {
 
-					if (stdout && error === null) {
+					if (error === null) {
 						ctx.usage = stdout;
 					} else {
-						ctx.usage = '.bin/'+opts.name+' --help';
+						ctx.usage = 'node ./bin/'+opts.name+' --help';
 					}
 
 					done(null);
@@ -146,6 +177,33 @@
 				);
 			}
 
+			function _overWritePrompt(done) {
+				var dst = path.join(opts.output, 'package.json');
+
+				fs.exists(dst, function (exists) {
+					if (!exists) return done(null);
+
+					program.log.warn('package.json'.green,'already exists');
+
+					var yesno = { name: 'yesno',
+						message: 'Overwrite?',
+						validator: /y[es]*|n[o]?/,
+						warning: 'Must respond yes or no',
+						default: 'no'
+					};
+
+					prompt.get( yesno , function (err, val) {  // TODO: Prompt to overwrite
+						if (val.yesno != "yes" && val.yesno != "y") {
+							program.log.warn('Initialization skipped');
+							done('Initialization skipped');
+						} else {
+							done(null);
+						}
+					});
+
+				});
+			}
+
 			function _writePackage(done) {
 				program.log.info('Adding','package.json'.bold.blue);
 				render(
@@ -164,7 +222,7 @@
 				done(null);
 
 			}
-			
+	
 		});
 
 };

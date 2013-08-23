@@ -3,7 +3,7 @@
  */
 
 
-// TODO: Clean this up!!
+// TODO: Clean this up!!  Use async.
 
 module.exports = function (program) {
 	var editor = require('editor');
@@ -12,6 +12,8 @@ module.exports = function (program) {
 
 	var prompt = require('../lib/prompt')(program);
 	var render = require('../lib/render')(program);
+
+	var async = require('async');
 
 	program
 		.command('add [name]')
@@ -36,84 +38,101 @@ module.exports = function (program) {
 				yesno: 'no'
 			};
 
-			var properties = {
-				name: {
-					pattern: /^[a-zA-Z0-9\s\-]+$/,
-					message: 'Name must be only letters, numbers, spaces, or dashes',
-					default: ctx.name,
-					required: true
-				},
-				description: { default: ctx.description },
-				version: { default: ctx.version }  // TODO: validate
-			};
+			async.series([
+				_prompt,
+				_overWritePrompt,
+				_write,
+				_edit
+			]);
 
-			if (!opts.prompt)
-				prompt.override = ctx;
+			function _prompt(done) {
 
-			prompt.start();
-
-			prompt.get({ properties: properties }, function (err, ctx) {
-				if (err && err.message == 'canceled') {
-					console.log('\n');
-					program.log.warn('Command initialization skipped');
+				if (!opts.prompt) {
+					prompt.override = ctx;
+					done(null);
 					return;
 				}
 
-				ctx.name = ctx.name.replace('.js', '');
-				ctx.file = 'cmds/'+ctx.name+'.js';
+				var properties = {
+					name: {
+						pattern: /^[a-zA-Z0-9\s\-]+$/,
+						message: 'Name must be only letters, numbers, spaces, or dashes',
+						default: ctx.name,
+						required: true
+					},
+					description: { default: ctx.description },
+					version: { default: ctx.version }  // TODO: validate
+				};
 
-				var src = path.join(opts.template, '/cmds/cmdrfile.js.eco');
-				var dst = path.join(opts.output, ctx.file);
+				prompt.start();
 
-				fs.exists(dst, function (exists) {
-
-					if (exists) {
-						program.log.warn('Command',ctx.name.green,'already exists at',dst.blue);
-
-						var yesno = { name: 'yesno',
-							message: 'Overwrite?',
-							validator: /y[es]*|n[o]?/,
-							warning: 'Must respond yes or no',
-							default: 'no'
-						};
-
-						prompt.get( yesno , function (err, val) {  // TODO: Prompt to overwrite
-							if (val.yesno == "yes" || val.yesno == "y") {
-								_write();
-							} else {
-								program.log.warn('Command initialization skipped');
-							}
-						});
-
-					} else {
-						_write();
+				prompt.get({ properties: properties }, function (err, result) {
+					if (err && err.message == 'canceled') {
+						console.log('\n');
+						program.log.warn('Command initialization skipped');
+						done('Command initialization skipped');
+						return;
 					}
 
-					function _write() {
-						program.log.info('Initializing command',ctx.name.green,'at',dst.blue);
-						render(src, dst, ctx);
-						_edit();
-					}
+					ctx = result;
+					done(null);
 
-					function _edit() {
-						if (opts.editor) {
-							program.log.info('Opening',ctx.name.green,'in editor');
-
-							if (opts.editor === true && program.config.get('editor')) {
-								_opts = { editor: program.config.get('editor') };
-							} else {
-								_opts = {};
-							}
-
-							editor(dst, _opts, function (code, sig) {  // TODO: Catch error
-								program.log.debug('finished editing with code ' + code);
-							});
-						}
-					}
-					
 				});
 
-			});
+			}
+
+			function _overWritePrompt(done) {
+
+				ctx.name = ctx.name.replace('.js', '');
+				ctx.file = 'cmds/'+ctx.name+'.js';
+				ctx.src = path.join(opts.template, '/cmds/cmdrfile.js.eco');
+				ctx.dst = path.join(opts.output, ctx.file);
+
+				fs.exists(ctx.dst, function (exists) {
+					if (!exists) done(null);
+
+					program.log.warn('Command',ctx.name.green,'already exists');
+
+					var yesno = { name: 'yesno',
+						message: 'Overwrite?',
+						validator: /y[es]*|n[o]?/,
+						warning: 'Must respond yes or no',
+						default: 'no'
+					};
+
+					prompt.get( yesno , function (err, val) {  // TODO: Prompt to overwrite
+						if (val.yesno != "yes" && val.yesno != "y") {
+							program.log.warn('Command initialization skipped');
+							done('Command initialization skipped');
+						} else {
+							done(null);
+						}
+					});
+
+				});
+			}
+
+			function _write(done) {
+				program.log.info('Initializing command',ctx.name.green);
+				render(ctx.src, ctx.dst, ctx, done);
+			}
+
+			function _edit(done) {
+				if (opts.editor) {
+					program.log.info('Opening',ctx.name.green,'in editor');
+
+					if (opts.editor === true && program.config.get('editor')) {
+						_opts = { editor: program.config.get('editor') };
+					} else {
+						_opts = {};
+					}
+
+					editor(ctx.dst, _opts, function (code, sig) {  // TODO: Catch error
+						program.log.debug('finished editing with code ' + code);
+					});
+				}
+				done();
+			}
 
 		});
 

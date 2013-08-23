@@ -5,31 +5,38 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 ### Priority
 - [x] Finish init function
 	- [-] exec NPM init
-	- [x] exec npm link autocmdr or npm install --save autocmdr
-	- [-] Rename ./.autocmdr and ./autocmdr.js to .myapp and myapp.js	
+	- [x] exec `npm link autocmdr` or `npm install --save autocmdr`
+	- [-] Rename ./.autocmdr and ./autocmdr.js to .myapp and myapp.js
+	- [-] Make safe for existing files, read package.json content
+	- [-] Options for which files to add during init	
 - [?] Finish config
 	- [-] Global, user global, cwd?
 	- [-] Scaffold bin/app to use .[appname] as config
-	- [ ] Document autocmdr config options
-	- [ ] Default template (add.template, init.template)
-	- [ ] Use config namespaces (core.editor, add.template, etc)?
-- [x] Update readme with better intro
+	- [x] Document autocmdr config options
+	- [-] Default template (add.template, init.template)
+	- [-] Use config namespaces (core.editor, add.template, etc)?
+- [ ] Template
+	- [ ] fix autocmdr dependency in package.json
+	- [x] fix usage in readme.md
+	- [x] help component to template?
+- [ ] Readme
+	- [x] Update readme with better intro
+	- [-] Add command and plug-in file examples to Readme.md
+	- [x] Add description of plug-ins to readme
+	- [ ] Be consistent in Readme (plug-in, plugin vs. component, executable vs. commander.js app vs. cli)
 - [x] Update to latest commander.js
-- [-] Add command and plugin file examples to Readme.md
-- [x] Add description of plugins to readme
 - [-] Autoload autocmdr.js in cwd.
 	- [?] Document this
-- [ ] Make final decision on "plugins"!!
+- [ ] Make final decision on "plug-ins"!!
 	- [ ] Namespace
 	- [ ] Plugins vs. components
-	- [ ] Add prompt and eco to plugins?
-	- [ ] Guidelines for what should be a plugin/component
-- [ ] Be consistence in Readme (plugin vs. componanet, executable vs. commander.js app vs. cli)
+	- [ ] Add prompt and eco to plug-ins?
+	- [ ] Guidelines for what should be a plug-in / component
 
-### New features/plugins
-- [x] tabtab autocompletion
-- [x] Did you mean XXX plugin for unknown commands
-- [-] prompter
+### New features / plugins
+- [x] tabtab auto-completion
+- [x] Did you mean XXX plug-in for unknown commands
+- [x] prompter
 - [ ] file globber
 - [ ] Localization!!  (would be awesome)
 - [ ] Progress bar??
@@ -45,10 +52,11 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [x] Add logger
 - [-] Unit tests
 - [ ] Support grunt/automaton tasks?
+- [ ] Support for flatiron plug-ins/commands?
 - [ ] Properly handle async actions
 - [ ] Autoload some mode_modules/.bin? Support external commands?
 - [-] Use /bin instead of /cmds?
-- [-] Should each cmdfile be envokable?  (`./bin/autocmdr somecmd options` = `./cmds/somecmd options`)
+- [-] Should each cmdfile be invokable?  (`./bin/autocmdr somecmd options` = `./cmds/somecmd options`)
 - [ ] Properly handle options for subcommands
 - [-] create lib/name.js?
 - [ ] require('name') to include all tasks in another autocmdr app?
@@ -59,10 +67,5 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [x] add|edit name[.js], .js is optional
 - [-] Should autocmdr apps depend only on commander.js, by default?
 - [x] Load 'plugins' to get logging and easy loading
-- [x] Make logger and loader optional?
-- [ ] Plugins should require other plugins
-- [x] Build readme?
-- [x] add lib/config.js to add config store.
-- [-] add lib/runner.js to execute programs.
-- [x] Add did you mean XXX plugin
+- [ ] Plug-ins should require other plugins
 - [-] Take a look at eco plugin.
