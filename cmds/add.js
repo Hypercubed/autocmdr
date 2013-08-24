@@ -71,15 +71,11 @@ module.exports = function (program) {
 				prompt.start();
 
 				prompt.get({ properties: properties }, function (err, result) {
-					if (err && err.message == 'canceled') {
-						console.log('\n');
-						program.log.warn('Command initialization skipped');
-						done('Command initialization skipped');
-						return;
-					}
+					if (err && err.message == 'canceled')
+						return done('Command initialization skipped');
 
 					ctx = result;
-					done(null);
+					done(err);
 
 				});
 
@@ -105,12 +101,10 @@ module.exports = function (program) {
 					};
 
 					prompt.get( yesno , function (err, val) {  // TODO: Prompt to overwrite
-						if (val.yesno != "yes" && val.yesno != "y") {
-							program.log.warn('Command initialization skipped');
-							done('Command initialization skipped');
-						} else {
-							done(null);
-						}
+						if (val.yesno != "yes" && val.yesno != "y")
+							return done('Command initialization skipped');
+
+						return done(null);
 					});
 
 				});
@@ -122,19 +116,9 @@ module.exports = function (program) {
 			}
 
 			function _edit(done) {
-				if (opts.editor) {
-					program.log.info('Opening',ctx.name.green,'in editor');
+				if (opts.editor)
+					program.parse(['','','edit',name]);
 
-					if (opts.editor === true && program.config.get('editor')) {
-						_opts = { editor: program.config.get('editor') };
-					} else {
-						_opts = {};
-					}
-
-					editor(ctx.dst, _opts, function (code, sig) {  // TODO: Catch error
-						program.log.debug('finished editing with code ' + code);
-					});
-				}
 				done();
 			}
 

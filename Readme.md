@@ -184,7 +184,7 @@ The most basic form of a command module is shown below.  Within the function the
 
 ## Plug-in modules
 
-autocmdr plug-in modules have the same structure as command modules.  The only difference is that they are not designed to be automatically loaded.  Plugins are loaded using node's require function again exporting a single initialization function; this time accepting an options object as the second parameter.  Below are the builtin autocmdr plugins.
+autocmdr plug-in modules have the same structure as command modules.  The only difference is that they are not designed to be automatically loaded.  Plugins are loaded using node's require function again exporting a single initialization function; this time accepting an options object as the second parameter.  Below are the built-in autocmdr plugins.
 
 ### loader
 

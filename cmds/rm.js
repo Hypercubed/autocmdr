@@ -5,7 +5,7 @@
  module.exports = function (program) {
 
 	program
-		.command('rm <cmdfile>')
+		.command('rm <name>')
 		.version('0.0.0')
 		.description('Delete a command file.')
 		.action(function(cmdfile){
@@ -24,7 +24,7 @@
 			} else {
 				program.log.warn('Command',cmdfile.green,'not found');
 			}
-			
+
 		});
-	
+
 };

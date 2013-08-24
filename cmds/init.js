@@ -15,7 +15,7 @@
 	var render = require('../lib/render')(program);
 
 	program
-		.command('init [name]')
+		.command('init [name] [commands... ]')
 		.option('-P, --no-prompt', "don\'t prompt for additional input")
 		//.option('--ver [version]', "version number")
 		//.option('--desc [description]', "description")
@@ -29,7 +29,7 @@
 		// TODO: Enable/disable plugins
 		.version('0.0.0')
 		.description('Create a new CLI application.')
-		.action(function(name, opts){
+		.action(function(name, cmds, opts){
 
 			var defaults ={
 				output: process.cwd(),
@@ -39,6 +39,7 @@
 			};
 
 			opts = xtend(defaults, opts || {});
+			cmds = cmds || '';
 
 			program.log.info('Initializing ',opts.name.bold.blue);
 
@@ -62,8 +63,16 @@
 				_linkAutocmdr
 			], function(err,result) {
 				if (err)
-					program.log.error(err);
+					return program.log.error(err);
+
+				if (cmds)
+					cmds.split(',').forEach(function(name) {
+						program.parse(['','','add',name,'-E','-P']);
+					});
+
 			});
+
+
 
 			// Async functions
 			function _prompt(done) {
@@ -95,18 +104,18 @@
 				prompt.start();
 
 				prompt.get({ properties: properties }, function (err, result) {
-					if (err && err.message == 'canceled' || result && result.continue != "yes") {
-						program.log.warn('Initialization skipped');
-						return done('canceled');
-					}
+					console.log('\n');
+
+					if (err && err.message == 'canceled' || result && result.continue != "yes")
+						return done('Initialization skipped');
 
 					ctx = result;
-					done(null);
+					return done(err);
 
 				});
 			}
 
-			
+			// Async functions
 			function _writeBin(done) {
 				var bin = path.join(opts.output, 'bin/', ctx.name);
 
@@ -124,12 +133,7 @@
 
 				cp.exec('node '+bin+' --help', function (error, stdout, stderr) {
 
-					if (error === null) {
-						ctx.usage = stdout;
-					} else {
-						ctx.usage = 'node ./bin/'+opts.name+' --help';
-					}
-
+					ctx.usage = (error === null) ? stdout : 'node ./bin/'+opts.name+' --help';
 					return done(null);
 
 				});
@@ -171,11 +175,10 @@
 					};
 
 					prompt.get( yesno , function (err, val) {  // TODO: Prompt to overwrite
-						if (val.yesno != "yes" && val.yesno != "y") {
-							program.log.warn('Initialization skipped');
+						if (val.yesno != "yes" && val.yesno != "y")
 							return done('Initialization skipped');
-						}
-						done(null);
+
+						return done(null);
 					});
 
 				});
@@ -195,10 +198,13 @@
 				program.log.info('All done.  Now trying to run npm to install or link to autocmdr.  Run ' + 'npm install'.bold.yellow + ' if it fails.');
 
 				var args = (opts.link) ? ['link','autocmdr'] : ['install'];
-				spawn('npm', args, { stdio: 'inherit' });
-				return done(null);
+				var npm = spawn('npm', args, { stdio: 'inherit' });
+				npm.on('close', function (code) {
+					return done(null);
+				});
+
 			}
-	
+
 		});
 
 };

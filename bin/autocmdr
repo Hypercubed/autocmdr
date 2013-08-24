@@ -6,6 +6,9 @@ var path			= require('path');
 // autocmdr
 var program  = require('../');
 
+program
+	.option('-g, --global', "use global autocmdr tasks");
+
 // Plugins
 require('../lib/logger')(program);
 require('../lib/package')(program);
@@ -24,9 +27,6 @@ if (argv.indexOf('-g') > -1) {  // Global autocmdr
 	require('../lib/config')(program, { path: configpath });
 }
 
-program
-	.option('-g, --global', "use global autocmdr tasks");
-
 require('../lib/completion')(program);
 
 program.parse(argv);
@@ -36,4 +36,4 @@ if (program.args.length < 1 ) {
 	program.outputHelp();
 	process.exit(1);
 }
-	
+
