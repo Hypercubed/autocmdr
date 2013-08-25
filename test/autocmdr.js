@@ -3,6 +3,7 @@
 var assert = require("assert");
 var path = require('path');
 var exec = require('child_process').exec;
+var fs = require('fs');
 
 var globalCmds = [ 'config', 'completion', 'add', 'edit', 'init', 'rm'  ];
 
@@ -61,7 +62,7 @@ describe('autocmdr API', function () {
 
 describe('autocmdr bin', function(){
 	var cmd = 'node '+path.join(process.cwd(), './bin/autocmdr')+' ';
-	//process.chdir('./test/example');
+	process.chdir('./test/example');
 
 	it('--help should run without errors', function(done) {
 		exec(cmd+'--help', function (error, stdout, stderr) {
@@ -99,23 +100,25 @@ describe('autocmdr bin', function(){
 		});
 	});
 
-	/* For safety untill init is safe for existing projects
 	it('init should run without errors', function(done) {
-		this.timeout(0)
+		this.timeout(0);
 
 		exec(cmd+'-g init -P', function (error, stdout, stderr) {
 			//console.log(stdout);
 			assert(!error);
+			assert(fs.existsSync('Readme.md'));
+			assert(fs.existsSync('package.json'));
+			assert(fs.existsSync('test'));
 			done();
 		});
 	});
-	*/
 
 	it('add should run without errors', function(done) {
 		exec(cmd+'-g add mycmd -P -E', function (error, stdout, stderr) {
 			if (error) return done(error);
 			//console.log(stdout);
 			assert(!error);
+			assert(fs.existsSync('cmds/mycmd.js'));
 			done();
 		});
 	});
@@ -125,6 +128,7 @@ describe('autocmdr bin', function(){
 			if (error) return done(error);
 			//console.log(stdout);
 			assert(!error);
+			assert(!fs.existsSync('cmds/mycmd.js'));
 			done();
 		});
 	});

@@ -13,10 +13,6 @@ A autocmdr CLI app
 
   Commands:
 
-    add [options]          Command description
-    div [options]          Command description
-    mul [options]          Command description
-    sub [options]          Command description
     config [key] [value]   Get and set options
     completion             Print command completion script
 
