@@ -1,13 +1,13 @@
 autocmdr
 =============
 
-This is a work in progress, experiment, proof of concept, and/or waist of time.
+This is a work in progress, experiment, proof of concept, and/or waste of time.
 
 # Description
 
-autocmdr is a command runner, command builder, and command line interface application builder.  autocmdr itself was partially built using autocmdr.  Also see the obligatory todo app here [todo-md](https://github.com/Hypercubed/todo-md) (Works with GFM task lists!!).
+autocmdr is a command runner, command builder, and CLI application builder.  autocmdr itself was partially built using autocmdr.  Also see the obligatory todo app here [todo-md](https://github.com/Hypercubed/todo-md) (Works with GFM task lists!!).
 
-Warning... The usage is changing rapidly.  I'm still discovering new ways to use this.  Feedback is welcome.
+Warning... The usage is changing rapidly.  I'm working towards a [0.1.0](https://github.com/Hypercubed/autocmdr/issues?milestone=1) release soon.  Feedback is welcome.
 
 [![Gittip donate button](http://badgr.co/gittip/hypercubed.png)](https://www.gittip.com/hypercubed/ "Donate weekly to this project using Gittip")
 [![Paypal donate button](http://badgr.co/paypal/donate.png?bg=%23feb13d)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X7KYR6T9U2NHC "One time donation to this project using Paypal")
@@ -24,9 +24,11 @@ autocmdr is a CLI application builder.  autocmdr itself is CLI that includes a r
 
 ## Summary
 
-Essentially autocmdr works in three modes.  Local detached mode, global builder mode (accessed using the `-g` switch on the command line), and library mode.  In local mode autocmdr (executing `autocmdr` without the `-g` flag) will run any commands specified in the current working directory's (cwd's) `cmds/` folder.  By convention each file in the `cmds/` directory corresponds to one commander.js command, although this is not necessary.  In this mode it is not necessary to install autocmdr in the current working directory, you are using the global autocmdr executable with the local `cmds/` commands.
+Essentially autocmdr works in three modes.  Local detached mode, global builder mode (accessed using the `-g` switch on the command line), and library mode.  In local mode autocmdr (executing `autocmdr` without the `-g` flag) will load any commands located in the current working directory's (cwd's) `cmds/` folder.  By convention each file in the `cmds/` directory corresponds to one commander.js command, although this is not necessary.  In this mode it is not necessary to install autocmdr in the current working directory, you are using the global autocmdr executable with the local `cmds/` commands.
 
-In global builder mode (`autocmdr -g`) autocmdr is loaded with commands that enable management of the cwd's command files and building of autocmdr/commader.js CLI apps.  You are still working in the cwd, but using the global commands to manage the local commands.  See below for more details and examples.  In library mode a local commander.js based CLI executable is created that has access to autocmdr plug-ins (see below).
+In global builder mode (`autocmdr -g`) autocmdr is loaded with commands that enable management of the cwd's command files and building of autocmdr/commader.js CLI apps.  You are still working in the cwd, but using the global commands to manage the local commands.  See below for more details and examples.  
+
+In library mode a local commander.js based CLI executable is created that has access to autocmdr plug-ins (see below).
 
 ## Install autocmdr globally
 
@@ -100,9 +102,9 @@ In global mode (`-g`) you can add and edit commands to the current working direc
 
 ## Using autocmdr as a app builder (Library mode)
 
-If a set of commands in a folder are useful globally you can convert a set of tasks to an semi-independent commander.js command line app.
+If a set of commands in a folder are useful globally you can convert a set of tasks to an semi-independent commander.js command line application.
 
-1. Create an independent autocmdr based app
+1. Create an independent commander.js based app with autocmdr default plug-ins.
 
 
         > cd example
@@ -159,8 +161,8 @@ The new executable you just created, by default, will have access to the autocmd
 
 You can set options with this the `autocmdr config` command.  `autocmdr config` will list all config variables.  `autocmdr config name` will get a value,  `autocmdr config name value` will set a value.  Currently the following config options are available:
 
-`autocmdr config author` will get/set the default cli author name
-`autocmdr config editor` will get/set the default editor
+`autocmdr -g config author` will get/set the default cli author name
+`autocmdr -g config editor` will get/set the default editor
 
 # Commander.js components
 
@@ -170,13 +172,13 @@ Commands and plug-ins are node.js modules that export a single initialization fu
 
 The most basic form of a command module is shown below.  Within the function the commander.js program is manipulated to add a single command as any other commander.js program (see [commander.js api documentationn](http://visionmedia.github.io/commander.js/)).  
 
-    module.exports = function (program, options) {
+    module.exports = function (program) {
 
         program
             .command('name')
             .version('version')
             .description('description')
-            .action(function(){
+            .action(function(opts){
                 // Do something
             });
     
@@ -184,7 +186,13 @@ The most basic form of a command module is shown below.  Within the function the
 
 ## Plug-in modules
 
-autocmdr plug-in modules have the same structure as command modules.  The only difference is that they are not designed to be automatically loaded.  Plugins are loaded using node's require function again exporting a single initialization function; this time accepting an options object as the second parameter.  Below are the built-in autocmdr plugins.
+autocmdr plug-in modules have the same structure as command modules.  The only difference is that they are not designed to be automatically loaded.  Plugins are loaded using node's require function again exporting a single initialization function; this time accepting an options object as the second parameter.  Below are the built-in autocmdr plug-ins.
+
+    module.exports = function (program, options) {
+
+        // Do plug-in stuff here
+    
+    };
 
 ### loader
 
@@ -202,11 +210,15 @@ Adding `require('autocmdr/lib/logger')(program)` will add `program.log` to your 
     program.info('Hello again');
     program.debug('Can you hear me now?');
 
+While this component is optional other components expect to find and instant of Winston at `program.log`.
+
 ### config
 
 This plug-in will load [nconf](https://github.com/flatiron/nconf) for handling of configuration.  It will add program.config as an instance of nconf.
 
 Adding `require('autocmdr/lib/config')(program)` will enable this.
+
+While this component is optional other components expect to find and instant of nconf at `program.config`.
 
 ### help
 

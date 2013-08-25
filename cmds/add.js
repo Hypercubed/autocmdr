@@ -44,8 +44,11 @@ module.exports = function (program) {
 				_write,
 				_edit
 			], function(err,result) {
-				if (err)
+				if (err) {
 					program.log.error(err);
+					process.exit(1);
+				}
+
 			});
 
 			return;
@@ -119,7 +122,7 @@ module.exports = function (program) {
 				if (opts.editor)
 					program.parse(['','','edit',name]);
 
-				done();
+				return done();
 			}
 
 		});

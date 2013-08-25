@@ -62,8 +62,11 @@
 				_writeTests,
 				_linkAutocmdr
 			], function(err,result) {
-				if (err)
-					return program.log.error(err);
+				if (err) {
+					program.log.error(err);
+					process.exit(1);
+				}
+
 
 				if (cmds)
 					cmds.split(',').forEach(function(name) {

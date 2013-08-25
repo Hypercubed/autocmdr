@@ -23,6 +23,7 @@
 				program.log.info('Successfully deleted ',cmdfile.green);
 			} else {
 				program.log.warn('Command',cmdfile.green,'not found');
+				process.exit(1);
 			}
 
 		});

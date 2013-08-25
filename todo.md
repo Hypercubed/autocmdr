@@ -8,9 +8,11 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 	- [x] exec `npm link autocmdr` or `npm install --save autocmdr`
 	- [-] Rename ./.autocmdr and ./autocmdr.js to .myapp and myapp.js
 	- [-] Make safe for existing files, read package.json content
-	- [-] Options for which files to add during init	
+	- [-] Options for which files to add during init
+	- [ ] exit code on error/abort	
 - [?] Finish config
-	- [-] Global, user global, cwd?
+	- [ ] Autocmdr .autocmdr, then cwd's .autocmdr are loaded
+	- [ ] -g toggles which is edited but not which is loaded?
 	- [-] Scaffold bin/app to use .[appname] as config
 	- [x] Document autocmdr config options
 	- [-] Default template (add.template, init.template)
@@ -30,8 +32,9 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [ ] Make final decision on "plug-ins"!!
 	- [ ] Namespace
 	- [ ] Plugins vs. components
-	- [ ] Add prompt and eco to plug-ins?
+	- [x] Add prompt and eco to plug-ins?
 	- [ ] Guidelines for what should be a plug-in / component
+- [ ] Parse with callback?
 
 ### New features / plugins
 - [x] tabtab auto-completion
@@ -41,11 +44,13 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [ ] Localization!!  (would be awesome)
 - [ ] Progress bar??
 - [ ] utile?
-- [ ] update-notifier
+- [ ] update-notifier (requires NPM, post 0.1.0).
+- [ ] Version check if node_modules/commander > node_modules/autocmdr/commander
 
 ### Commander.js
 
 - [ ] String commands (autocmdr list show)
+- [ ] Hidden commands?
 
 ### Auto commander:
 
@@ -53,13 +58,13 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [-] Unit tests
 - [ ] Support grunt/automaton tasks?
 - [ ] Support for flatiron plug-ins/commands?
-- [ ] Properly handle async actions
+- [ ] Properly handle async actions (parse with callback?)
 - [ ] Autoload some mode_modules/.bin? Support external commands?
-- [-] Use /bin instead of /cmds?
+- [-] Use /bin instead of /cmds? (not for now)
 - [-] Should each cmdfile be invokable?  (`./bin/autocmdr somecmd options` = `./cmds/somecmd options`)
 - [ ] Properly handle options for subcommands
 - [-] create lib/name.js?
-- [ ] require('name') to include all tasks in another autocmdr app?
+- [ ] require to include all tasks in another autocmdr app?
 - [ ] Subcommands?, i.e. autocmdr todo <cmd>
 - [ ] Run add on edit.
 - [x] Run edit on add.
@@ -67,5 +72,6 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [x] add|edit name[.js], .js is optional
 - [-] Should autocmdr apps depend only on commander.js, by default?
 - [x] Load 'plugins' to get logging and easy loading
-- [ ] Plug-ins should require other plugins
-- [-] Take a look at eco plugin.
+- [ ] Plug-ins should require other plugins?
+- [ ] Make loading components twice safe
+- [-] Take a look at render plugin.

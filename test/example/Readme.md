@@ -8,21 +8,7 @@ A autocmdr CLI app
 # Usage
 
 ```
-
-  Usage: example [options] [command]
-
-  Commands:
-
-    config [key] [value]   Get and set options
-    completion             Print command completion script
-
-  Options:
-
-    -h, --help     output usage information
-    -d, --debug    enable debugger
-    -V, --version  output the version number
-
-
+node ./bin/example --help
 ```
 
 ## auto-completion
