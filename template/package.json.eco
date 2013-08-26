@@ -15,6 +15,5 @@
     "autocmdr": "~0.0.1"
   },
   "devDependencies": {
-    "mocha": "~1.12.0"
   }
 }
