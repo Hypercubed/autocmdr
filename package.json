@@ -9,7 +9,7 @@
   "scripts": {
     "test": "mocha -R spec"
   },
-  "author": "J. Harshbarger",
+  "author": "J. Harshbarger (https://github.com/hypercubed)",
   "license": "MIT",
   "dependencies": {
     "commander": "~2.0.0",
