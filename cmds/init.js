@@ -75,7 +75,7 @@
 
 			});
 
-
+			return;
 
 			// Async functions
 			function _prompt(done) {

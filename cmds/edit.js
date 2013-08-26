@@ -30,7 +30,7 @@ module.exports = function (program) {
 			}
 
 			editor(file, _opts, function (code, sig) {
-				program.log.debug('finished editing with code ' + code);
+
 			});
 
 		});
