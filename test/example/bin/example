@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var program  = require('commander');
+var program  = require('autocmdr');
 
 require('autocmdr/lib/logger')(program);
 require('autocmdr/lib/loader')(program);
