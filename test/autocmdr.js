@@ -130,6 +130,8 @@ describe('autocmdr bin', function(){
 	});
 
 	it('add should run without errors', function(done) {
+                this.timeout(4000);
+
 		exec(cmd+'-g add mycmd -P -E', function (error, stdout, stderr) {
 			//console.log('\n');
 			//console.log(stdout);
@@ -141,6 +143,8 @@ describe('autocmdr bin', function(){
 	});
 
 	it('rm should run without errors', function(done) {
+                this.timeout(4000);
+
 		exec(cmd+'-g rm mycmd', function (error, stdout, stderr) {
 			//console.log('\n');
 			//console.log(stdout);
@@ -152,6 +156,8 @@ describe('autocmdr bin', function(){
 	});
 
 	it('should return error on unknown command', function(done) {
+                this.timeout(4000);
+
 		exec(cmd+'-g addd', function (error, stdout, stderr) {
 			//console.log('\n');
 			//console.log(stdout);
@@ -164,6 +170,8 @@ describe('autocmdr bin', function(){
 	});
 
 	it('should return error on missing command', function(done) {
+                this.timeout(4000);
+
 		exec(cmd+'-g', function (error, stdout, stderr) {
 			//console.log('\n');
 			//console.log(stdout);
