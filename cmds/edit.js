@@ -5,12 +5,13 @@
 module.exports = function (program) {
 	var editor = require('editor');
 	var path = require('path');
+	var domain = require('domain');
 
 	program
 		.command('edit <name>')
 		.version('0.0.0')
 		.description('Edit a command file.')
-		.option('--editor <editor>', "Specify editor to use")
+		.option('-e, --editor <editor>', "Specify editor to use")
 		.action(function(name, opts){
 			opts = opts || {};
 			opts.name = name;
@@ -19,7 +20,7 @@ module.exports = function (program) {
 
 			var file = path.join(process.cwd(), 'cmds/', opts.name+'.js');
 
-			program.log.info('Opening',file.green,'in editor');
+			program.log.info('Opening',file.green,'in editor');  // TODO: stat file, prompt to add on missing
 
 			if (opts.editor !== false  && opts.editor !== "false") {
 				_opts = { editor: opts.editor };
@@ -29,8 +30,20 @@ module.exports = function (program) {
 				program.log.debug('Launching default editor');
 			}
 
-			editor(file, _opts, function (code, sig) {
+			var d = domain.create();
 
+			d.on('error', function(er) {  
+			  if (er.code == 'ENOENT') {
+			  	program.log.warn('Unable to launch default editor');
+			  } else {
+			  	console.error(err);
+			  }
+			});
+
+			d.run(function() {  
+				editor(file, _opts, function (code, sig) {
+					//console.log(code, sig);
+				});
 			});
 
 		});

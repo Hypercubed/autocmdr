@@ -142,6 +142,20 @@ describe('autocmdr bin', function(){
 		});
 	});
 
+	/* it('should return error on missing editor', function(done) {
+        this.timeout(4000);
+
+		exec(cmd+'-g edit mycmd -e vimmm', function (error, stdout, stderr) {
+			//console.log('\n');
+			console.log(stderr);
+
+			assert(error);
+			assert.equal(error.code,1);
+			assert(stderr.match(/is not a known command/i));
+			done();
+		});
+	}); */
+
 	it('rm should run without errors', function(done) {
                 this.timeout(4000);
 
