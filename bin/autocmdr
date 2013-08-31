@@ -6,6 +6,7 @@ var path			= require('path');
 // autocmdr
 var program  = require('../');
 
+
 program
 	.option('-g, --global', "use global autocmdr tasks");
 
@@ -16,15 +17,12 @@ require('../lib/help')(program);
 
 var argv = program.normalize(process.argv);
 
-if (argv.indexOf('-g') > -1) {  // Global autocmdr
+if (argv.indexOf('-g') > -1 || argv.indexOf('--global') > -1) {  // Global autocmdr
 	require('../lib/loader')(program);
 	require('../lib/config')(program);
 } else {
-	var cmdspath = path.join(process.cwd(), 'cmds/');
-	var configpath = path.join(process.cwd(), '.autocmdr');
-
-	require('../lib/loader')(program, { path: cmdspath });
-	require('../lib/config')(program, { path: configpath });
+	require('../lib/loader')(program, { path: path.join(process.cwd(), 'cmds/') });
+	require('../lib/config')(program, { path: path.join(process.cwd(), '.autocmdr') });
 }
 
 require('../lib/completion')(program);
