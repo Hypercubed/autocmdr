@@ -13,16 +13,9 @@
   "license": "MIT",
   "dependencies": {
     "commander": "~2.0.0",
-    "eco": "~1.1.0-rc-3",
-    "editor": "0.0.4",
     "winston": "~0.7.2",
     "nconf": "~0.6.7",
     "didyoumean": "~1.1.0",
-    "prompt": "~0.2.11",
-    "async": "~0.2.9",
-    "xtend": "~2.0.6",
-    "mkdirp": "~0.3.5",
-    "win-spawn": "~2.0.0",
     "commander-tabtab": "~0.1.0"
   },
   "bugs": {
@@ -33,6 +26,5 @@
     "url": "https://github.com/Hypercubed/autocmdr.git"
   },
   "devDependencies": {
-    "rimraf": "~2.2.2"
   }
 }

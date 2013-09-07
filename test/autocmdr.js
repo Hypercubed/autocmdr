@@ -3,9 +3,6 @@
 var assert = require("assert");
 var path = require('path');
 var exec = require('child_process').exec;
-var fs = require('fs');
-var rimraf = require('rimraf');
-var mkdirp = require('mkdirp');
 
 describe('autocmdr API', function () {
 	var program = require("../");
@@ -30,33 +27,10 @@ describe('autocmdr API', function () {
 		assert.equal(program._description, 'autocmdr');
 	});
 
-	// TODO: run in test directory
-	//it('should add local cmds', function() {
-	//	program.parse(['','','add','XXXtest', '-E']);
-	//});
-
-	//it('should load local cmds', function() {
-		//require('../lib/loader.js')(program, {  path: path.resolve(__dirname, '../cmds/') });
-		//console.log(program.commands)
-	//});
-
-	//it('should rm local cmds', function() {
-	//	program.parse(['','','rm','XXXtest']);
-	//});
-
 });
 
 describe('autocmdr bin', function(){
 	var cmd = 'node '+path.join(process.cwd(), './bin/autocmdr')+' ';
-
-	rimraf.sync('./test/example');
-	mkdirp.sync('./test/example');
-	process.chdir('./test/example');
-
-	if(path.basename(process.cwd()) !== 'example') {
-		console.log('Error creating example directory');
-		process.exit(1);
-	}
 
 	it('--help should run without errors', function(done) {
 		exec(cmd+'--help', function (error, stdout, stderr) {
