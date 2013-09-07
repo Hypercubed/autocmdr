@@ -26,5 +26,6 @@
     "url": "https://github.com/Hypercubed/autocmdr.git"
   },
   "devDependencies": {
+    "mocha": "~1.12.1"
   }
 }
