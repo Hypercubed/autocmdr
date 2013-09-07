@@ -4,30 +4,17 @@
 var path			= require('path');
 
 // autocmdr
-var program  = require('../');
-
-
-program
-	.option('-g, --global', "use global autocmdr tasks");
+var program  = require('commander');
 
 // Plugins
 require('../lib/logger')(program);
 require('../lib/package')(program);
 require('../lib/help')(program);
-
-var argv = program.normalize(process.argv);
-
-if (argv.indexOf('-g') > -1 || argv.indexOf('--global') > -1) {  // Global autocmdr
-	require('../lib/loader')(program);
-	require('../lib/config')(program);
-} else {
-	require('../lib/loader')(program, { path: path.join(process.cwd(), 'cmds/') });
-	require('../lib/config')(program, { path: path.join(process.cwd(), '.autocmdr') });
-}
-
+require('../lib/loader')(program, { path: path.join(process.cwd(), 'cmds/') });
+require('../lib/config')(program, { path: path.join(process.cwd(), '.autocmdr') });
 require('../lib/completion')(program);
 
-program.parse(argv);
+program.parse(process.argv);
 
 if (program.args.length < 1 ) {
 	program.log.error('No command specified. See \''+program._name+' --help\'.');

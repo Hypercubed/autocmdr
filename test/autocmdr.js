@@ -7,8 +7,6 @@ var fs = require('fs');
 var rimraf = require('rimraf');
 var mkdirp = require('mkdirp');
 
-var globalCmds = [ 'config', 'completion', 'add', 'edit', 'init', 'rm'  ];
-
 describe('autocmdr API', function () {
 	var program = require("../");
 
@@ -23,27 +21,13 @@ describe('autocmdr API', function () {
 		require('../lib/logger.js')(program);
 		require('../lib/package.js')(program, {  path: path.resolve(__dirname, '../package.json'), name: 'autocmdr' });
 		require('../lib/help.js')(program);
-		//require('../lib/eco.js')(program);
 		require('../lib/config.js')(program, {  path: path.resolve(__dirname, '../.autocmdr') });
 		require('../lib/completion.js')(program);
 
 		assert(!!program.log);
-		//assert(!!program.package);
-		//assert(!!program.eco);
 		assert(!!program.config);
 
 		assert.equal(program._description, 'autocmdr');
-	});
-
-	it('should load global cmds without errors', function() {
-		require('../lib/loader.js')(program, {  path: path.resolve(__dirname, '../cmds/'), name: 'autocmdr'  });
-
-		//assert(!!program.loadCmds);
-		//assert(!!program.eco);
-
-		var cmds = program.commands.map(function(d) { return d._name; });
-		assert.deepEqual(cmds, globalCmds);
-
 	});
 
 	// TODO: run in test directory
@@ -114,65 +98,10 @@ describe('autocmdr bin', function(){
 		});
 	});
 
-	it('init should run without errors', function(done) {
-		this.timeout(0);
-
-		exec(cmd+'-g init -P -l', function (error, stdout, stderr) {
-			//console.log('\n');
-			//console.log(stdout);
-
-			assert(!error);
-			assert(fs.existsSync('Readme.md'));
-			assert(fs.existsSync('package.json'));
-			assert(fs.existsSync('test'));
-			done();
-		});
-	});
-
-	it('add should run without errors', function(done) {
-                this.timeout(4000);
-
-		exec(cmd+'-g add mycmd -P -E', function (error, stdout, stderr) {
-			//console.log('\n');
-			//console.log(stdout);
-
-			assert(!error);
-			assert(fs.existsSync('cmds/mycmd.js'));
-			done();
-		});
-	});
-
-	/* it('should return error on missing editor', function(done) {
-        this.timeout(4000);
-
-		exec(cmd+'-g edit mycmd -e vimmm', function (error, stdout, stderr) {
-			//console.log('\n');
-			console.log(stderr);
-
-			assert(error);
-			assert.equal(error.code,1);
-			assert(stderr.match(/is not a known command/i));
-			done();
-		});
-	}); */
-
-	it('rm should run without errors', function(done) {
-                this.timeout(4000);
-
-		exec(cmd+'-g rm mycmd', function (error, stdout, stderr) {
-			//console.log('\n');
-			//console.log(stdout);
-
-			assert(!error);
-			assert(!fs.existsSync('cmds/mycmd.js'));
-			done();
-		});
-	});
-
 	it('should return error on unknown command', function(done) {
                 this.timeout(4000);
 
-		exec(cmd+'-g addd', function (error, stdout, stderr) {
+		exec(cmd+'addd', function (error, stdout, stderr) {
 			//console.log('\n');
 			//console.log(stdout);
 
@@ -186,7 +115,7 @@ describe('autocmdr bin', function(){
 	it('should return error on missing command', function(done) {
                 this.timeout(4000);
 
-		exec(cmd+'-g', function (error, stdout, stderr) {
+		exec(cmd, function (error, stdout, stderr) {
 			//console.log('\n');
 			//console.log(stdout);
 
