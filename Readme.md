@@ -1,4 +1,4 @@
-autocmdr [![Build Status](https://secure.travis-ci.org/Hypercubed/autocmdr.png?branch=master)](https://travis-ci.org/Hypercubed/autocmdr) [![NPM version](https://badge.fury.io/js/autocmdr.png)](http://badge.fury.io/js/autocmdr)
+autocmdr [![Build Status](https://secure.travis-ci.org/Hypercubed/autocmdr.png?branch=dev)](https://travis-ci.org/Hypercubed/autocmdr) [![NPM version](https://badge.fury.io/js/autocmdr.png)](http://badge.fury.io/js/autocmdr)
 =============
 
 autocmdr is a both a command line interface for running tasks and a set of components for building CLIs.  autocmdr is designed to work with [generator-commander](https://github.com/Hypercubed/generator-commander) to enable easily building of commander.js command line apps. 
@@ -247,15 +247,14 @@ See [todo.md](https://github.com/Hypercubed/autocmdr/blob/master/todo.md) \( man
 
 # License
 
-Copyright (c) 2013 Jayson Harshbarger
-
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
+
+Copyright (c) 2013 J. Harshbarger
+[![Gittip donate button](http://badgr.co/gittip/hypercubed.png)](https://www.gittip.com/hypercubed/ "Donate weekly to this project using Gittip")
+[![Paypal donate button](http://badgr.co/paypal/donate.png?bg=%23feb13d)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X7KYR6T9U2NHC "One time donation to this project using Paypal")
 
 # Acknowledgments
 
 autocmdr itself was (partially) built using [autocmdr](https://github.com/Hypercubed/autocmdr).
 
 autocmdr is build on top of [commander.js](https://github.com/visionmedia/commander.js) and inspired by other task managers \( [grunt](https://github.com/gruntjs/grunt), [automaton](https://github.com/IndigoUnited/automaton) \) and command line tools \( [docpad](https://github.com/bevry/docpad), [git](https://github.com/git/git) \).
-
-[![Gittip donate button](http://badgr.co/gittip/hypercubed.png)](https://www.gittip.com/hypercubed/ "Donate weekly to this project using Gittip")
-[![Paypal donate button](http://badgr.co/paypal/donate.png?bg=%23feb13d)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X7KYR6T9U2NHC "One time donation to this project using Paypal")

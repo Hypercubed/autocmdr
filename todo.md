@@ -3,13 +3,7 @@
 _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 
 ### Priority
-- [x] Finish init function
-	- [-] exec NPM init
-	- [x] exec `npm link autocmdr` or `npm install --save autocmdr`
-	- [-] Rename ./.autocmdr and ./autocmdr.js to .myapp and myapp.js
-	- [-] Make safe for existing files, read package.json content
-	- [-] Options for which files to add during init
-	- [ ] exit code on error/abort	
+- [ ] Finish transition to yo/generator-commander
 - [?] Finish config
 	- [ ] Autocmdr .autocmdr, then cwd's .autocmdr are loaded
 	- [ ] -g toggles which is edited but not which is loaded?
@@ -17,18 +11,11 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 	- [x] Document autocmdr config options
 	- [-] Default template (add.template, init.template)
 	- [-] Use config namespaces (core.editor, add.template, etc)?
-- [ ] Template
-	- [ ] fix autocmdr dependency in package.json
-	- [x] fix usage in readme.md
-	- [x] help component to template?
 - [ ] Readme
 	- [x] Update readme with better intro
 	- [-] Add command and plug-in file examples to Readme.md
 	- [x] Add description of plug-ins to readme
 	- [ ] Be consistent in Readme (plug-in, plugin vs. component, executable vs. commander.js app vs. cli)
-- [x] Update to latest commander.js
-- [-] Autoload autocmdr.js in cwd.
-	- [?] Document this
 - [ ] Make final decision on "plug-ins"!!
 	- [ ] Namespace
 	- [ ] Plugins vs. components
@@ -66,10 +53,10 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [-] create lib/name.js?
 - [ ] require to include all tasks in another autocmdr app?
 - [ ] Subcommands?, i.e. autocmdr todo <cmd>
-- [ ] Run add on edit.
-- [x] Run edit on add.
-- [x] Names don't have .js, files do.
-- [x] add|edit name[.js], .js is optional
+- [-] Run add on edit.
+- [-] Run edit on add.
+- [-] Names don't have .js, files do.
+- [-] add|edit name[.js], .js is optional
 - [-] Should autocmdr apps depend only on commander.js, by default?
 - [x] Load 'plugins' to get logging and easy loading
 - [ ] Plug-ins should require other plugins?
