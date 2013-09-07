@@ -1,7 +1,7 @@
 autocmdr
 =============
 
-autocmdr is a both a command line interface (CLI) for running tasks and a set of components for building CLIs.  autocmdr is designed to work with [generator-commander](https://github.com/Hypercubed/generator-commander) to enable easily building of great CLI apps. 
+autocmdr is a both a command line interface for running tasks and a set of components for building CLIs.  autocmdr is designed to work with [generator-commander](https://github.com/Hypercubed/generator-commander) to enable easily building of commander.js command line apps. 
 
 autocmdr itself was partially built using autocmdr/[generator-commander](https://github.com/Hypercubed/generator-commander).  Please also see the obligatory todo app here [todo-md](https://github.com/Hypercubed/todo-md) (Works with GFM task lists!!).
 
@@ -9,19 +9,19 @@ Warning... The usage is changing rapidly.  I'm working towards a [0.1.0](https:/
 
 # Introduction
 
-The diverse ecosystem of modules available for node.js through npm make it a great tool the rapid development of a variety of tools including useful command line interfaces.  [Commander.js](https://github.com/visionmedia/commander.js) from [visionmedia](https://github.com/visionmedia) is an excellent node.js command line parser that, using a natural, clean and highly readable syntax, allows for easy development of versatile self-documenting command line interfaces (CLIs).  However, a command line parser is just the beginning.  Many CLIs will inevitably need to include additional components for debug logging, configuration management, and other CLI type actions.  autocmdr is a command line tool that implements these modules, so you don't have too.  In fact using the autocmdr executable all you need to do is add command modules to your local directory and autocmdr will load them automatically along with a reasonable set of additional support components.  Using autocmdr along with [yo](https://github.com/yeoman/yo) and [generator-commander](https://github.com/Hypercubed/generator-commander) provides tools for easily building command components and full CLI applications.  This includes converting a detached set of command components into a independent CLI application that uses autocmdr (along with all it's support modules) as a library.
+The diverse ecosystem of modules available for node.js through npm make it a great tool for the rapid development of a variety of tools including useful command line interfaces.  [Commander.js](https://github.com/visionmedia/commander.js) from [visionmedia](https://github.com/visionmedia) is an excellent node.js command line parser that, using a natural, clean and highly readable syntax, allows for easy development of versatile self-documenting command line interfaces (CLIs).  However, a command line parser is just the beginning.  Many CLIs will inevitably need to include additional components such as debug logging, configuration management, and other CLI type actions.  autocmdr is a command line tool that implements these modules, so you don't have too.  In fact using the autocmdr executable all you need to do is add commands to your local directory and autocmdr will load them automatically along with a reasonable set of additional support components.  Using autocmdr along with [yo](https://github.com/yeoman/yo) and [generator-commander](https://github.com/Hypercubed/generator-commander) provides tools for easily building command components and full CLI applications.  This includes converting a detached set of command components into a independent CLI application that uses autocmdr (along with all it's support modules) as a library.
 
 ## Philosophy ad Workflow
 
 **Building excellent command tools using excellent tools.  Using the right tool for the right task**
 
-[commander.js](https://github.com/visionmedia/commander.js) is an node.js command line parser.
+[commander.js](https://github.com/visionmedia/commander.js) is an node.js command line parser from [visionmedia](https://github.com/visionmedia).
 
-autocmdr is a set of components that add interfaces and support to commander.js based applications.
+autocmdr is a set of components that add interfaces and support to commander.js based applications built by Hypercubed (me).
 
-[yo](https://github.com/yeoman/yo) is a scaffolding tool built by google.
+[yo](https://github.com/yeoman/yo) is a scaffolding tool built by Google.
 
-[generator-commander](https://github.com/Hypercubed/generator-commander) is a commander.js application generator for Yo.
+[generator-commander](https://github.com/Hypercubed/generator-commander) is a commander.js application generator for Yo also built by Hypercubed.
 
 Yo, together with the commander generator, makes it easy to scaffold complete command line tools that uses commander.js command line parser and autocmdr components to enable great command line interfaces.
 
@@ -105,9 +105,9 @@ If a set of commands in a folder are useful globally you can convert a set of ta
 
 1. Create an independent commander.js based app with autocmdr default plug-ins.
 
-        > cd example
-        > yo commander
-        
+	    $ cd example
+	    $ yo commander
+	    
 		[?] Name (must be only letters, spaces, or dashes) example
 		[?] Version: 0.0.0
 		[?] Description: A commander CLI app
@@ -121,40 +121,40 @@ If a set of commands in a folder are useful globally you can convert a set of ta
 		   create .jshintrc
 		   create .gitignore
 		   create .travis.yml
-
+	
 		I'm all done. Running npm install for you to install the required dependencies. If this fails, try running the command yourself.
-        
-        > ./bin/example --help
-        
-          Usage: example [options] [command]
-          
-          Commands:
-            mycmd [options]        A commander command
-            config [key] [value]   Get and set options
-            completion             Print command completion script
-        
-          Options:
-            -h, --help     output usage information
-            -d, --debug    enable debugger
-            -V, --version  output the version number
+	    
+	    $ ./bin/example --help
+	    
+	      Usage: example [options] [command]
+	      
+	      Commands:
+	        mycmd [options]        A commander command
+	        config [key] [value]   Get and set options
+	        completion             Print command completion script
+	    
+	      Options:
+	        -h, --help     output usage information
+	        -d, --debug    enable debugger
+	        -V, --version  output the version number
 
 2. (Optional) Make it global
 
-        > npm link
-        > cd ..
-        > example --help
-
-          Usage: example [options] [command]
-
-          Commands:
-            mycmd [options]        A commander command
-            config [key] [value]   Get and set options
-            completion             Print command completion script
-
-          Options:
-            -h, --help     output usage information
-            -d, --debug    enable debugger
-            -V, --version  output the version number
+	    $ npm link
+	    $ cd ..
+	    $ example --help
+	
+	      Usage: example [options] [command]
+	
+	      Commands:
+	        mycmd [options]        A commander command
+	        config [key] [value]   Get and set options
+	        completion             Print command completion script
+	
+	      Options:
+	        -h, --help     output usage information
+	        -d, --debug    enable debugger
+	        -V, --version  output the version number
 
 The new executable you just created, when you include the autocmdr components, will have access to the autocmdr features as well as the commands in the `cmds/` folder.  Edit `bin/example` to change what components are loaded.
 
@@ -188,13 +188,15 @@ autocmdr component modules have the same structure as command modules.  The only
     
     };
 
-### loader
+# autocmdr supplied components
+
+## loader
 
 This component is what loads the `cmds/` modules. 
 
 Adding `require('autocmdr/lib/loader.js')(program)` will load all modules in the `cmds` folder just above the executable.  This path can be overridden by setting the path option; for example `require('autocmdr/lib/loader.js')(program, { path: path.join(process.cwd(), 'cmds/') )` will load modules from the cwd's `/cmds` folder.
 
-### logger
+## logger
 
 The logger component uses [Winston](https://github.com/flatiron/winston) for logging.
 
@@ -206,7 +208,7 @@ Adding `require('autocmdr/lib/logger')(program)` will add `program.log` to your 
 
 While this component is optional other components expect to find and instant of Winston at `program.log`.
 
-### config
+## config
 
 This component will load [nconf](https://github.com/flatiron/nconf) for handling of configuration.  It will add program.config as an instance of nconf.
 
@@ -214,21 +216,21 @@ Adding `require('autocmdr/lib/config')(program)` will enable this.
 
 While this component is optional other components expect to find and instant of nconf at `program.config`.
 
-### help
+## help
 
-This plug-in will use [didyoumean](https://github.com/dcporter/didyoumean.js) to add a "Did you mean:" message to your application when an unknown command is given.
+This component will use [didyoumean](https://github.com/dcporter/didyoumean.js) to add a "Did you mean:" message to your application when an unknown command is given.
 
 Adding `require('autocmdr/lib/help')(program)` will enable this.
 
-### package
+## package
 
-This plug-in will use the will load reasonable defaults (such as description and bug reporting URL) from your application's package.json.
+This component will use the will load reasonable defaults (such as description and bug reporting URL) from your application's package.json.
 
 Adding `require('autocmdr/lib/package')(program)` will load the package.json file located one directory above the executable.  You can override this path using the options object.
 
-### completion
+## completion
 
-This plug-in will use [node-tabtab](https://github.com/mklabs/node-tabtab) to add auto-completion support to your application.
+This component will use [node-tabtab](https://github.com/mklabs/node-tabtab) to add auto-completion support to your application.
 
 Adding `require('autocmdr/lib/completion')(program)` just before `program.parse(argv);` will will enable auto-completion support.  You will then need to do one of the following to enable auto-completion in your shell.
 
@@ -253,7 +255,7 @@ Copyright (c) 2013 Jayson Harshbarger
 
 autocmdr itself was (partially) built using [autocmdr](https://github.com/Hypercubed/autocmdr).
 
-autocmdr is build on top of [commander.js](https://github.com/visionmedia/commander.js) and inspired by other task managers \( [grunt](https://github.com/gruntjs/grunt), [automaton](https://github.com/IndigoUnited/automaton) \) and command line tools \( [docpad](https://github.com/bevry/docpad), [git](https://github.com/git/git) \) and (of course) [flatiron](https://github.com/flatiron/flatiron).
+autocmdr is build on top of [commander.js](https://github.com/visionmedia/commander.js) and inspired by other task managers \( [grunt](https://github.com/gruntjs/grunt), [automaton](https://github.com/IndigoUnited/automaton) \) and command line tools \( [docpad](https://github.com/bevry/docpad), [git](https://github.com/git/git) \).
 
 [![Gittip donate button](http://badgr.co/gittip/hypercubed.png)](https://www.gittip.com/hypercubed/ "Donate weekly to this project using Gittip")
 [![Paypal donate button](http://badgr.co/paypal/donate.png?bg=%23feb13d)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X7KYR6T9U2NHC "One time donation to this project using Paypal")
