@@ -7,7 +7,7 @@ var fs = require('fs');
 var rimraf = require('rimraf');
 var mkdirp = require('mkdirp');
 
-var globalCmds = [ 'config', 'completion', 'add', 'edit', 'init', 'rm'  ];
+//var globalCmds = [ 'config', 'completion', 'add', 'edit', 'init', 'rm'  ];
 
 describe('autocmdr API', function () {
 	var program = require("../");
@@ -35,7 +35,7 @@ describe('autocmdr API', function () {
 		assert.equal(program._description, 'autocmdr');
 	});
 
-	it('should load global cmds without errors', function() {
+	/*it('should load global cmds without errors', function() {
 		require('../lib/loader.js')(program, {  path: path.resolve(__dirname, '../cmds/'), name: 'autocmdr'  });
 
 		//assert(!!program.loadCmds);
@@ -44,7 +44,7 @@ describe('autocmdr API', function () {
 		var cmds = program.commands.map(function(d) { return d._name; });
 		assert.deepEqual(cmds, globalCmds);
 
-	});
+	});*/
 
 	// TODO: run in test directory
 	//it('should add local cmds', function() {
