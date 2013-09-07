@@ -33,6 +33,7 @@
     "url": "https://github.com/Hypercubed/autocmdr.git"
   },
   "devDependencies": {
-    "rimraf": "~2.2.2"
+    "rimraf": "~2.2.2",
+    "mocha": "~1.12.1"
   }
 }
