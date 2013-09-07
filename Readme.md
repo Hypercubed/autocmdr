@@ -1,4 +1,4 @@
-autocmdr
+autocmdr [![Build Status](https://secure.travis-ci.org/Hypercubed/autocmdr.png?branch=master)](https://travis-ci.org/Hypercubed/autocmdr) [![NPM version](https://badge.fury.io/js/autocmdr.png)](http://badge.fury.io/js/autocmdr)
 =============
 
 This is a work in progress, experiment, proof of concept, and/or waste of time.
