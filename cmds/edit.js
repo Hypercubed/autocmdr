@@ -2,6 +2,8 @@
  * This component opens the autocmdr/commander in your editor.
  */
 
+'use strict';
+
 module.exports = function (program) {
 	var editor = require('editor');
 	var path = require('path');

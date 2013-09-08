@@ -2,6 +2,7 @@
  * This component adds an autocmdr/commander command component from the cmds/ directory.
  */
 
+'use strict';
 
 // TODO: Clean this up!!  Use async.
 

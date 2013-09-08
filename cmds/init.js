@@ -2,6 +2,8 @@
  * This component initializes a new autocmdr/commader cli app using a template.
  */
 
+'use strict';
+
  module.exports = function (program) {
 	var path = require('path');
 	var fs = require('fs');

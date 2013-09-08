@@ -2,6 +2,8 @@
  * This component removes a autocmdr/commander command component from the cmds/ directory.
  */
 
+'use strict';
+
  module.exports = function (program) {
 
 	program
