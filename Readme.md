@@ -1,4 +1,4 @@
-autocmdr [![Build Status](https://secure.travis-ci.org/Hypercubed/autocmdr.png?branch=dev)](https://travis-ci.org/Hypercubed/autocmdr) [![NPM version](https://badge.fury.io/js/autocmdr.png)](http://badge.fury.io/js/autocmdr)
+autocmdr [![Build Status](https://secure.travis-ci.org/Hypercubed/autocmdr.png?branch=master)](https://travis-ci.org/Hypercubed/autocmdr) [![NPM version](https://badge.fury.io/js/autocmdr.png)](http://badge.fury.io/js/autocmdr)
 =============
 
 autocmdr is a both a command line interface for running tasks and a set of components for building CLIs.  autocmdr is designed to work with [generator-commander](https://github.com/Hypercubed/generator-commander) to enable easily building of commander.js command line apps. 
@@ -75,6 +75,8 @@ using yo and generator-commander you can add commands to the current working dir
 	[?] description: A commander command
 	   create cmds/mycmd.js
 
+	I'm all done. Add `require('../cmds/mycmd.js')(program);` to your app before program.parse.
+
     $ autocmdr --help
 
       Usage: autocmdr [options] [command]
@@ -113,6 +115,13 @@ If a set of commands in a folder are useful globally you can convert a set of ta
 		[?] Description: A commander CLI app
 		[?] GitHub username:
 		[?] license: MIT
+		>[x] Logger (adds a Winston logger)
+		 [x] Commander loader (automatically loads commands from cmds/ directory)
+		 [x] Autocompletion (adds command line autocompletion)
+		 [x] Package (load reasonable defaults from your application's package.json)
+		 [x] Config (adds a config command)
+		 [x] Help (adds a `did you mean` messege when an unknown command is given)
+		  
 		   create package.json
 		   create bin/example
 		   create Readme.md
@@ -172,7 +181,7 @@ The most basic form of a command component is shown below.  Within the exported 
             .command('name')
             .version('version')
             .description('description')
-            .action(function(opts){
+            .action(function(args){
                 // Do something
             });
     

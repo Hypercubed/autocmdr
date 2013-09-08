@@ -1,4 +1,4 @@
-
+'use strict';
 
 var assert = require("assert");
 var path = require('path');
@@ -73,7 +73,7 @@ describe('autocmdr bin', function(){
 	});
 
 	it('should return error on unknown command', function(done) {
-                this.timeout(4000);
+        this.timeout(4000);
 
 		exec(cmd+'addd', function (error, stdout, stderr) {
 			//console.log('\n');
@@ -87,7 +87,7 @@ describe('autocmdr bin', function(){
 	});
 
 	it('should return error on missing command', function(done) {
-                this.timeout(4000);
+        this.timeout(4000);
 
 		exec(cmd, function (error, stdout, stderr) {
 			//console.log('\n');

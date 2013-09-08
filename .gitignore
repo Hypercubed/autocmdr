@@ -2,3 +2,4 @@ node_modules/
 .autocmdr
 .vagrant
 Vagrantfile
+temp/
