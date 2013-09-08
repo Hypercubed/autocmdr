@@ -4,6 +4,7 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 
 ### Priority
 - [ ] Finish transition to yo/generator-commander
+- [ ] Update example using yo
 - [?] Finish config
 	- [ ] Autocmdr .autocmdr, then cwd's .autocmdr are loaded
 	- [ ] -g toggles which is edited but not which is loaded?
@@ -15,13 +16,13 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 	- [x] Update readme with better intro
 	- [-] Add command and plug-in file examples to Readme.md
 	- [x] Add description of plug-ins to readme
-	- [ ] Be consistent in Readme (plug-in, plugin vs. component, executable vs. commander.js app vs. cli)
+	- [x] Be consistent in Readme (plug-in, plugin vs. component, executable vs. commander.js app vs. cli)
 - [ ] Make final decision on "plug-ins"!!
-	- [ ] Namespace
-	- [ ] Plugins vs. components
+	- [?] Namespace
+	- [x] Plugins vs. components
 	- [x] Add prompt and eco to plug-ins?
 	- [ ] Guidelines for what should be a plug-in / component
-- [ ] Parse with callback?
+- [-] Parse with callback?
 
 ### New features / plugins
 - [x] tabtab auto-completion
@@ -36,15 +37,15 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 
 ### Commander.js
 
-- [ ] String commands (autocmdr list show)
+- [ ] String commands (i.e. autocmdr list show do)
 - [ ] Hidden commands?
 
 ### Auto commander:
 
 - [x] Add logger
 - [-] Unit tests
-- [ ] Support grunt/automaton tasks?
-- [ ] Support for flatiron plug-ins/commands?
+- [-] Support grunt/automaton tasks?
+- [-] Support for flatiron plug-ins/commands?
 - [ ] Properly handle async actions (parse with callback?)
 - [ ] Autoload some mode_modules/.bin? Support external commands?
 - [-] Use /bin instead of /cmds? (not for now)
