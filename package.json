@@ -12,8 +12,8 @@
   "author": "J. Harshbarger (https://github.com/hypercubed)",
   "license": "MIT",
   "dependencies": {
-    "commander": "~2.0.0",
-    "winston": "~0.7.2",
+    "commander": "^2.2.0",
+    "winston": "~0.7.3",
     "nconf": "~0.6.7",
     "didyoumean": "~1.1.0",
     "commander-tabtab": "~0.1.0"
