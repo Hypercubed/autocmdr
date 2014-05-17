@@ -65,3 +65,4 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [-] Take a look at render plugin.
 - [ ] Update commnder.js (2.0.0  -> 2.2.0)
 - [ ] Add grunt {test,watch,publish}
+- [ ] Use nixt for testing
