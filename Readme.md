@@ -1,5 +1,7 @@
-autocmdr [![Build Status](https://secure.travis-ci.org/Hypercubed/autocmdr.png?branch=master)](https://travis-ci.org/Hypercubed/autocmdr) [![NPM version](https://badge.fury.io/js/autocmdr.png)](http://badge.fury.io/js/autocmdr)
+autocmdr [![Build Status](https://secure.travis-ci.org/Hypercubed/autocmdr.png?branch=master)](https://travis-ci.org/Hypercubed/autocmdr) [![NPM version](https://badge.fury.io/js/autocmdr.png)](http://badge.fury.io/js/autocmdr) [![Code Climate](https://codeclimate.com/github/Hypercubed/autocmdr.png)](https://codeclimate.com/github/Hypercubed/autocmdr)
 =============
+
+[![NPM](https://nodei.co/npm/autocmdr.png?downloads=true)](https://nodei.co/npm/autocmdr/)
 
 autocmdr is a both a command line interface for running tasks and a set of components for building CLIs.  autocmdr is designed to work with [generator-commander](https://github.com/Hypercubed/generator-commander) to enable easily building of commander.js command line apps. 
 
