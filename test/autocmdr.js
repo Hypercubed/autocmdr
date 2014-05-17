@@ -1,10 +1,11 @@
-'use strict';
 
 var assert = require("assert");
 var path = require('path');
 var exec = require('child_process').exec;
 
 describe('autocmdr API', function () {
+	'use strict';
+
 	var program = require("../");
 
 	it('should be an Commander instance', function () {

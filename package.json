@@ -26,6 +26,11 @@
     "url": "https://github.com/Hypercubed/autocmdr.git"
   },
   "devDependencies": {
-    "mocha": "~1.12.1"
+    "mocha": "~1.12.1",
+    "load-grunt-tasks": "^0.4.0",
+    "grunt-mocha-test": "^0.10.2",
+    "grunt": "^0.4.5",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-contrib-jshint": "^0.10.0"
   }
 }
