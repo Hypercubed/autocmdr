@@ -32,6 +32,7 @@
     "grunt": "^0.4.5",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-contrib-jshint": "^0.10.0",
-    "nixt": "^0.3.0"
+    "nixt": "^0.3.0",
+    "grunt-release": "^0.7.0"
   }
 }
