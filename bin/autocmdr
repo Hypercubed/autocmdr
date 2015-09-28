@@ -4,7 +4,7 @@
 // node
 var path			= require('path');
 
-// autocmdr
+// commander
 var program  = require('commander');
 
 // Plugins
@@ -22,4 +22,3 @@ if (program.args.length < 1 ) {
 	program.outputHelp();
 	process.exit(1);
 }
-
