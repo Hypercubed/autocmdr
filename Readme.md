@@ -13,7 +13,7 @@ Warning... The usage is changing rapidly.  I'm working towards a [0.1.0](https:/
 
 The diverse ecosystem of modules available for node.js through npm make it a great tool for the rapid development of a variety of tools including useful command line interfaces.  [Commander.js](https://github.com/visionmedia/commander.js) from [visionmedia](https://github.com/visionmedia) is an excellent node.js command line parser that, using a natural, clean and highly readable syntax, allows for easy development of versatile self-documenting command line interfaces (CLIs).  However, a command line parser is just the beginning.  Many CLIs will inevitably need to include additional components such as debug logging, configuration management, and other CLI type actions.  autocmdr is a command line tool that implements these modules, so you don't have too.  In fact using the autocmdr executable all you need to do is add commands to your local directory and autocmdr will load them automatically along with a reasonable set of additional support components.  Using autocmdr along with [yo](https://github.com/yeoman/yo) and [generator-commander](https://github.com/Hypercubed/generator-commander) provides tools for easily building command components and full CLI applications.  This includes converting a detached set of command components into a independent CLI application that uses autocmdr (along with all it's support modules) as a library.
 
-## Philosophy ad Workflow
+## Philosophy and Workflow
 
 **Building excellent command tools using excellent tools.  Using the right tool for the right task**
 
