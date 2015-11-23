@@ -31,7 +31,7 @@ _(managed using [todo-md](https://github.com/Hypercubed/todo-md))_
 - [ ] file globber
 - [ ] Localization!!  (would be awesome)
 - [ ] Progress bar??
-- [ ] utile?
+- [ ] utils?
 - [ ] update-notifier (requires NPM, post 0.1.0).
 - [ ] Version check if node_modules/commander > node_modules/autocmdr/commander
 

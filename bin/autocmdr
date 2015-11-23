@@ -2,10 +2,10 @@
 'use strict';
 
 // node
-var path			= require('path');
+var path = require('path');
 
 // commander
-var program  = require('commander');
+var program = require('commander');
 
 // Plugins
 require('../lib/logger')(program);
@@ -17,8 +17,8 @@ require('../lib/completion')(program);
 
 program.parse(process.argv);
 
-if (program.args.length < 1 ) {
-	program.log.error('No command specified. See \''+program._name+' --help\'.');
-	program.outputHelp();
-	process.exit(1);
+if (program.args.length < 1) {
+  program.log.error('No command specified. See \'' + program._name + ' --help\'.');
+  program.outputHelp();
+  process.exit(1);
 }

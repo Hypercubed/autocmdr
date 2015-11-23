@@ -1,6 +1,5 @@
 
-
-var commander  = require('commander');
+var commander = require('commander');
 
 /**
  * Expose the root command.

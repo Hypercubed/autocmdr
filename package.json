@@ -6,17 +6,23 @@
   "bin": {
     "autocmdr": "./bin/autocmdr"
   },
+  "files": [
+    "bin",
+    "lib",
+    "index.js"
+  ],
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "mocha -R spec",
+    "check": "semistandard"
   },
   "author": "J. Harshbarger (https://github.com/hypercubed)",
   "license": "MIT",
   "dependencies": {
-    "commander": "^2.2.0",
-    "winston": "~0.7.3",
-    "nconf": "~0.6.7",
+    "commander": "^2.9.0",
+    "commander-tabtab": "~0.1.0",
     "didyoumean": "~1.1.0",
-    "commander-tabtab": "~0.1.0"
+    "nconf": "~0.6.7",
+    "winston": "~0.7.3"
   },
   "bugs": {
     "url": "https://github.com/Hypercubed/autocmdr/issues"
@@ -27,12 +33,7 @@
   },
   "devDependencies": {
     "mocha": "~1.12.1",
-    "load-grunt-tasks": "^0.4.0",
-    "grunt-mocha-test": "^0.10.2",
-    "grunt": "^0.4.5",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-contrib-jshint": "^0.10.0",
     "nixt": "^0.3.0",
-    "grunt-release": "^0.7.0"
+    "semistandard": "^7.0.3"
   }
 }
